@@ -3,12 +3,15 @@ var mongoose = require('mongoose');
 
 var app = express();
 
-app.set('port', process.env.PORT || 9000);
+//for heroku
+var port = process.env.PORT || 9000;
+var mongoUri = process.env.MONGODB_URI || 'mongodb://local/airlistdb';
+mongoose.connect(mongoUri);
 
 //serve static files
 app.use(express.static(__dirname + '/'));
 
-app.listen(app.get('port'), function(){
-  console.log("server up and running on port:" + app.get('port'));
+app.listen(port, function(){
+  console.log("server up and running on port:" + port);
 });
 
