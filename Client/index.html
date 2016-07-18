@@ -32,6 +32,21 @@
       <input ng-model="list.days" placeholder="Number of Days"></input>
       <button ng-click="addItem(list)">Add</button>
 
+      <!-- display search results -->
+      <ul>
+        <li ng-repeat="list in query">
+        {{list.item}}
+        <br>
+        {{list.description}}
+        <br>
+        {{list.price}}
+        <br>
+
+        {{list.days}} <button ng-click="rent()">Rent</button>
+        </li>
+      </ul>
+
+      <!-- display after adding/deleting items -->
       <ul>
         <li ng-repeat="list in lists">
         {{list.item}}

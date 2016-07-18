@@ -1,5 +1,5 @@
 angular.module('app', [])
-  .controller('thecontroller', function($scope){
+  .controller('thecontroller', function($scope, $http){
     $scope.options = [
       {category: "All Departments"},
       {category: "Books"},
@@ -20,9 +20,13 @@ angular.module('app', [])
       })
     }
 
-    $scope.search = function(query){
-      console.log($scope.option);
-      $http({})
+    $scope.search = function(query, category){
+      $http({
+        method:'GET',
+        url: '/listings/' + query  + '/' + category
+      }).success(function(res) {
+        $scope.query = res;
+      })
     }
 
     $scope.addItem = function(post){
