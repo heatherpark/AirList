@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html>
 
-<link rel="stylesheet" href="production/styles.min.css">
+  <head>
+    <link rel="stylesheet" href="production/styles.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+    <script src="production/production.min.js"></script>
+    <script src="Controller/controller.js"></script>
+    <title> App </title>
+  </head>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
-<script src="production/production.min.js"></script>
-<head>
-  <title> App </title>
-</head>
+  <body ng-app="app" ng-controller="thecontroller">
 
-<body ng-app>
+    <h1> AirList </h1>
 
-<h1>HELLO FUTURE AIRLIST COMING!!!</h1>
-<h1>Checking auto deploy</h1>
+    <input ng-model="list.item" placeholder="Item Name"></input> {{list.item}}
+    <input ng-model="list.description" placeholder="Description"></input>
+    <input ng-model="list.price" placeholder="Price"></input>
+    <input ng-model="list.days" placeholder="Number of Days"></input>
+    <button ng-click="addItem(list)">Add</button>
 
-  <input ng-model=list.item></input>
-  <button ng-click="addItem(list)">Add</button>
+    <ul>
+      <li ng-repeat="list in lists">
+      {{list.item}}
+      <br>
+      {{list.description}}
+      <br>
+      {{list.price}}
+      <br>
+      {{list.days}}
+      </li>
+    </ul>
 
-  <p> <input type="text" ng-model="food"> </p>
-  <p> {{ food }} </p>
-
-  <ul ng-repeat="list in lists">
-    <li></li>
-    <li></li>
-    <li></li>
-  </div>
-
-
-</body>
+  </body>
 
 </html>
