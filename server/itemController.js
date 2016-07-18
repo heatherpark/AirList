@@ -3,6 +3,7 @@ var Q = require('q');
 
 var makeItem = Q.nbind(Item.create, Item);
 var getAll = Q.nbind(Item.find, Item);
+var removeItem = Q.nbind(Item.remove, Item);
 
 var createItem = function(item, callback) {
   makeItem(item)
@@ -22,6 +23,16 @@ var getAllItems = function(callback) {
   .fail(function(err){
     console.error(err);
   });
+};
+
+var deleteItem = function(id, callback) {
+  removeItem({_id: id})
+  .then(function(item){
+    callback(item);
+  })
+  .fail(function(err){
+    console.error(err);
+  })
 };
 
 var updateAnItem = function(itemName, newParams, callback) {
