@@ -1,6 +1,15 @@
-//start here
 angular.module('app', [])
   .controller('thecontroller', function($scope){
+    $scope.options = [
+      {category: "All Departments"},
+      {category: "Books"},
+      {category: "Cars"},
+      {category: "Electronics"},
+      {category: "Furniture"},
+      {category: "Jewelry"},
+      {category: "Sporting Goods"},
+      {category: "Toys/Games"}
+    ];
 
     var refresh = function() {
       return $http({
@@ -9,6 +18,11 @@ angular.module('app', [])
       }).success(function(res) {
         $scope.lists = res;
       })
+    }
+
+    $scope.search = function(query){
+      console.log($scope.option);
+      $http({})
     }
 
     $scope.addItem = function(post){
