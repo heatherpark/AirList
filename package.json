@@ -21,12 +21,5 @@
   "devDependencies": {
     "grunt-cli": "^1.2.0"
   }
-<<<<<<< 88df8852f9673ff2066ed1aa616deb0170494452
-}
-||||||| merged common ancestors
-}
-=======
 }
 
-
->>>>>>> build gruntpack, update package.json, add client directory
