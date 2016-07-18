@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Rent stuff!",
   "author": "MewTwo Group",
+  "scripts": {
+    "start": "node ./server/server.js"
+  },
   "dependencies": {
     "body-parser": "^1.4.3",
     "express": "^4.4.5",
