@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var itemSchema = new mongoose.Schema({
+var ItemSchema = new mongoose.Schema({
   name: String,
   description: String,
   days: Number,
