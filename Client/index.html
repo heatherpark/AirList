@@ -4,8 +4,8 @@
   <head>
     <link rel="stylesheet" href="production/styles.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-    <script src="production/production.min.js"></script>
-    <script src="Controller/controller.js"></script>
+    <script src="production/production.js"></script>
+    <!-- <script src="Controller/controller.js"></script> -->
     <title> App </title>
   </head>
 
@@ -21,44 +21,64 @@
       </select>
 
       <input type="text" ng-model="searchBox" placeholder="Search items to rent">
-      <button ng-click="search(searchBox, {{selectedOption}})">Search</button>
+      <button ng-click="search(selectedOption)">Search</button>
 
     </div>
 
     <div>
-      <input ng-model="list.item" placeholder="Item Name"></input> {{list.item}}
+      <h3> Your Listing </h3>
+      <input ng-model="list.name" placeholder="Item Name"></input>
       <input ng-model="list.description" placeholder="Description"></input>
+      <select ng-model="list.category" ng-init="list.category = options[0].category">
+        <option ng-repeat="x in options" value="{{x.category}}">
+          {{x.category}}
+        </option>
+      </select>
       <input ng-model="list.price" placeholder="Price"></input>
       <input ng-model="list.days" placeholder="Number of Days"></input>
+      <span ng-model="list.rentable" ng-init="list.rentable=true">
       <button ng-click="addItem(list)">Add</button>
+      <hr>
+      <!--  <div>
+        {{list.name}}
+        <br>
+        {{list.description}}
+        <br>
+        {{list.price}}
+        <br>
+        {{list.days}} days <button ng-click="rent(list)">Rent</button>
+        <br>
+        {{ list.rentable  ?  "available now"  : "not available" }}
+      </div> -->
 
       <!-- display search results -->
-      <ul>
-        <li ng-repeat="list in query">
-        {{list.item}}
+      <h3> Search Results </h3>
+      <div class="searchResults" ng-repeat="list in query | filter:searchBox">
+      {{list.name}}
         <br>
         {{list.description}}
         <br>
         {{list.price}}
         <br>
+        {{list.days}} days <button ng-click="rent(list)">Rent</button>
+        <br>
+        {{ list.rentable  ?  "available now"  : "not available" }}
+      </div>
 
-        {{list.days}} <button ng-click="rent()">Rent</button>
-        </li>
-      </ul>
-
+      <hr>
       <!-- display after adding/deleting items -->
-      <ul>
-        <li ng-repeat="list in lists">
-        {{list.item}}
+      <h3> All Listings </h3>
+      <div class="addDelete" ng-repeat="list in lists">
+       {{list.name}}
         <br>
         {{list.description}}
         <br>
         {{list.price}}
         <br>
-
-        {{list.days}} <button ng-click="rent()">Rent</button>
-        </li>
-      </ul>
+        {{list.days}} days <button ng-click="rent(list)">Rent</button>
+        <br>
+        {{ list.rentable  ?  "available now"  : "not available" }}
+      </div>
     </div>
 
   </body>
