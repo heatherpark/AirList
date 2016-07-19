@@ -1,10 +1,4 @@
-body{
- background-color: green;
+.listingClass {
+  width: 10% ;
 }
 
-.searchResults{
-  background-color: yellow;
-}
-.addDelete{
-  background-color: blue;
-}

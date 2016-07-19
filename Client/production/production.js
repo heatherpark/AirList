@@ -11,8 +11,19 @@ angular.module('app', [])
       {category: "Toys/Games"}
     ];
 
+    $scope.addCategory = [
+      {category: "Books"},
+      {category: "Cars"},
+      {category: "Electronics"},
+      {category: "Furniture"},
+      {category: "Jewelry"},
+      {category: "Sporting Goods"},
+      {category: "Toys/Games"}
+    ];
+
+
     var refresh = function() {
-       $http({
+      return $http({
         method:'GET',
         url: '/listings'
       }).success(function(res) {
@@ -21,24 +32,16 @@ angular.module('app', [])
     };
 
     $scope.search = function(category){
-      if(category === 'All Departments') {
-         $http({
-          method:'GET',
-          url: '/listings'
-        }).success(function(res) {
-          $scope.query = res;
-        });
-      } else {
-        $http({
-          method:'GET',
-          url: '/listings/category/' + category
-        }).success(function(res) {
-          $scope.query = res;
-        });
-      }
+      $http({
+        method:'GET',
+        url: '/listings/category/' + category
+      }).success(function(res) {
+        $scope.query = res;
+      });
     };
 
     $scope.addItem = function(post){
+      console.log(post);
       $http({
         method:'POST',
         url: '/listings',
