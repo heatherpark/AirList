@@ -73,14 +73,16 @@ var updateAnItem = function(req, res) {
     if (err) {
       res.status(404);
       res.send(err);
-    } else {
+     } else {
+      console.log('doc is ', doc);
       doc.save();
       res.status(200);
       res.send(doc);
-    }
+     }
   });
 }
 module.exports.createItem = createItem;
 module.exports.getAllItems = getAllItems;
 module.exports.deleteItem = deleteItem;
 module.exports.getAnItem = getAnItem;
+module.exports.updateAnItem = updateAnItem;
