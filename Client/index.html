@@ -12,24 +12,54 @@
   <body ng-app="app" ng-controller="thecontroller">
 
     <h1> AirList </h1>
+    <div>
 
-    <input ng-model="list.item" placeholder="Item Name"></input> {{list.item}}
-    <input ng-model="list.description" placeholder="Description"></input>
-    <input ng-model="list.price" placeholder="Price"></input>
-    <input ng-model="list.days" placeholder="Number of Days"></input>
-    <button ng-click="addItem(list)">Add</button>
+      <select ng-model="selectedOption" ng-init="selectedOption = options[0].category">
+        <option ng-repeat="x in options" value="{{x.category}}">
+          {{x.category}}
+        </option>
+      </select>
 
-    <ul>
-      <li ng-repeat="list in lists">
-      {{list.item}}
-      <br>
-      {{list.description}}
-      <br>
-      {{list.price}}
-      <br>
-      {{list.days}}
-      </li>
-    </ul>
+      <input type="text" ng-model="searchBox" placeholder="Search items to rent">
+      <button ng-click="search(searchBox, {{selectedOption}})">Search</button>
+
+    </div>
+
+    <div>
+      <input ng-model="list.item" placeholder="Item Name"></input> {{list.item}}
+      <input ng-model="list.description" placeholder="Description"></input>
+      <input ng-model="list.price" placeholder="Price"></input>
+      <input ng-model="list.days" placeholder="Number of Days"></input>
+      <button ng-click="addItem(list)">Add</button>
+
+      <!-- display search results -->
+      <ul>
+        <li ng-repeat="list in query">
+        {{list.item}}
+        <br>
+        {{list.description}}
+        <br>
+        {{list.price}}
+        <br>
+
+        {{list.days}} <button ng-click="rent()">Rent</button>
+        </li>
+      </ul>
+
+      <!-- display after adding/deleting items -->
+      <ul>
+        <li ng-repeat="list in lists">
+        {{list.item}}
+        <br>
+        {{list.description}}
+        <br>
+        {{list.price}}
+        <br>
+
+        {{list.days}} <button ng-click="rent()">Rent</button>
+        </li>
+      </ul>
+    </div>
 
   </body>
 

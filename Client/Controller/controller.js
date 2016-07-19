@@ -1,6 +1,15 @@
-//start here
 angular.module('app', [])
-  .controller('thecontroller', function($scope){
+  .controller('thecontroller', function($scope, $http){
+    $scope.options = [
+      {category: "All Departments"},
+      {category: "Books"},
+      {category: "Cars"},
+      {category: "Electronics"},
+      {category: "Furniture"},
+      {category: "Jewelry"},
+      {category: "Sporting Goods"},
+      {category: "Toys/Games"}
+    ];
 
     var refresh = function() {
       return $http({
@@ -8,6 +17,15 @@ angular.module('app', [])
         url: '/listings'
       }).success(function(res) {
         $scope.lists = res;
+      })
+    }
+
+    $scope.search = function(query, category){
+      $http({
+        method:'GET',
+        url: '/listings/' + query  + '/' + category
+      }).success(function(res) {
+        $scope.query = res;
       })
     }
 
