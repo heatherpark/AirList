@@ -18,9 +18,15 @@ app.use(express.static(__dirname + '/../Client'));
 //api routes
 app.get('/listings',itemController.getAllItems);
 
+app.get('/listings/:id',itemController.getAnItem);
+
+app.get('/listings/category/:category',itemController.getAllItemsWithCategory);
+
 app.post('/listings',itemController.createItem);
 
 app.delete('/listings/:id',itemController.deleteItem);
+
+app.put('/listings/:id',itemController.updateAnItem);
 
 app.listen(port, function () {
   console.log("server up and running on port:" + port);
