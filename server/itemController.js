@@ -4,6 +4,7 @@ var Q = require('q');
 var makeItem = Q.nbind(Item.create, Item);
 var getAll = Q.nbind(Item.find, Item);
 var removeItem = Q.nbind(Item.remove, Item);
+var getItem = Q.nbind(Item.findOne, Item);
 
 var createItem = function(req, res) {
   makeItem(req.body)
@@ -24,7 +25,19 @@ var getAllItems = function(req, res) {
     res.json(items);
   })
   .fail(function(err){
-    res.status(404);
+    res.sendStatus(404);
+  });
+};
+
+var getAnItem = function(req, res) {
+  var id = req.params.id;
+  getItem({_id:id})
+  .then(function(item){
+    res.status(200);
+    res.json(item);
+  })
+  .fail(function(err){
+    res.sendStatus(404);
   });
 };
 
@@ -36,7 +49,7 @@ var deleteItem = function(req, res) {
     res.send(item);
   })
   .fail(function(err){
-    console.error(err);
+    res.sendStatus(404);
   })
 };
 
@@ -57,11 +70,17 @@ var updateAnItem = function(req, res) {
     if (newParams.name) {
         doc.name = newParams.name
     }
-    doc.save();
-    res.status(200);
-    res.send(doc);
+    if (err) {
+      res.status(404);
+      res.send(err);
+    } else {
+      doc.save();
+      res.status(200);
+      res.send(doc);
+    }
   });
 }
 module.exports.createItem = createItem;
 module.exports.getAllItems = getAllItems;
 module.exports.deleteItem = deleteItem;
+module.exports.getAnItem = getAnItem;
