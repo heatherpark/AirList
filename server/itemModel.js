@@ -5,6 +5,7 @@ var ItemSchema = new mongoose.Schema({
   description: String,
   days: Number,
   price: Number,
+  rentable: Boolean,
   category: String
 });
 
