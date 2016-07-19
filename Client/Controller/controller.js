@@ -12,7 +12,7 @@ angular.module('app', [])
     ];
 
     var refresh = function() {
-      return $http({
+       $http({
         method:'GET',
         url: '/listings'
       }).success(function(res) {
@@ -21,16 +21,24 @@ angular.module('app', [])
     };
 
     $scope.search = function(category){
-      $http({
-        method:'GET',
-        url: '/listings/category/' + category
-      }).success(function(res) {
-        $scope.query = res;
-      });
+      if(category === 'All Departments') {
+         $http({
+          method:'GET',
+          url: '/listings'
+        }).success(function(res) {
+          $scope.query = res;
+        });
+      } else {
+        $http({
+          method:'GET',
+          url: '/listings/category/' + category
+        }).success(function(res) {
+          $scope.query = res;
+        });
+      }
     };
 
     $scope.addItem = function(post){
-      console.log(post);
       $http({
         method:'POST',
         url: '/listings',
