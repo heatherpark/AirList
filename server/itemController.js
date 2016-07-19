@@ -20,7 +20,6 @@ var createItem = function(req, res) {
 var getAllItems = function(req, res) {
   getAll({})
   .then(function(items){
-    console.log(items);
     res.status(200);
     res.json(items);
   })
@@ -29,20 +28,23 @@ var getAllItems = function(req, res) {
   });
 };
 
-var deleteItem = function(id, callback) {
+var deleteItem = function(req, res) {
+  console.log(req.params.id);
+  var id = req.params.id;
   removeItem({_id: id})
   .then(function(item){
-    callback(item);
+    res.send(item);
   })
   .fail(function(err){
     console.error(err);
   })
 };
 
-var updateAnItem = function(itemName, newParams, callback) {
-  Item.findOne({
-    name: itemName
-  }, function(err, doc) {
+var updateAnItem = function(req, res) {
+  var id = req.params.id;
+  var newParams = req.body;
+
+  Item.findOne({_id: id}, function(err, doc) {
     if (newParams.days) {
         doc.days = newParams.days
     }
@@ -56,7 +58,8 @@ var updateAnItem = function(itemName, newParams, callback) {
         doc.name = newParams.name
     }
     doc.save();
-    callback(err, doc)
+    res.status(200);
+    res.send(doc);
   });
 }
 module.exports.createItem = createItem;
