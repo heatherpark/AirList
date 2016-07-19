@@ -11,6 +11,16 @@ angular.module('app', [])
       {category: "Toys/Games"}
     ];
 
+    $scope.addCategory = [
+      {category: "Books"},
+      {category: "Cars"},
+      {category: "Electronics"},
+      {category: "Furniture"},
+      {category: "Jewelry"},
+      {category: "Sporting Goods"},
+      {category: "Toys/Games"}
+    ];
+
     var refresh = function() {
        $http({
         method:'GET',
