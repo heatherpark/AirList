@@ -3,7 +3,7 @@
 
   <head>
     <link rel="stylesheet" href="production/styles.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="production/production.js"></script>
     <!-- <script src="Controller/controller.js"></script> -->
     <title> App </title>
@@ -47,13 +47,14 @@
         {{list.price}}
         <br>
         {{list.days}} days <button ng-click="rent(list)">Rent</button>
+        <button ng-click="remove(list)">Delete</button>
         <br>
         {{ list.rentable  ?  "available now"  : "not available" }}
       </div> -->
 
       <!-- display search results -->
       <h3> Search Results </h3>
-      <div class="searchResults" ng-repeat="list in query | filter:searchBox">
+      <div class="searchResults" ng-repeat="list in query | filter:searchBox | orderBy: 'category'">
       {{list.name}}
         <br>
         {{list.description}}
@@ -61,6 +62,7 @@
         {{list.price}}
         <br>
         {{list.days}} days <button ng-click="rent(list)">Rent</button>
+        <button ng-click="remove(list)">Delete</button>
         <br>
         {{ list.rentable  ?  "available now"  : "not available" }}
       </div>
@@ -76,6 +78,7 @@
         {{list.price}}
         <br>
         {{list.days}} days <button ng-click="rent(list)">Rent</button>
+        <button ng-click="remove(list)">Delete</button>
         <br>
         {{ list.rentable  ?  "available now"  : "not available" }}
       </div>
