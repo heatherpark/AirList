@@ -29,6 +29,20 @@ var getAllItems = function(req, res) {
   });
 };
 
+var getAllItemsWithCategory = function(req, res) {
+  var category = req.params.category;
+  console.log('category is ', category);
+  getAll({category: category})
+  .then(function(items){
+    console.log('items are ', items);
+    res.status(200);
+    res.json(items);
+  })
+  .fail(function(err){
+    res.sendStatus(404);
+  });
+}
+
 var getAnItem = function(req, res) {
   var id = req.params.id;
   getItem({_id:id})
@@ -59,16 +73,19 @@ var updateAnItem = function(req, res) {
 
   Item.findOne({_id: id}, function(err, doc) {
     if (newParams.days) {
-        doc.days = newParams.days
+      doc.days = newParams.days;
     }
     if (newParams.price) {
-        doc.price = newParams.price
+      doc.price = newParams.price;
     }
     if (newParams.description) {
-        doc.description = newParams.description
+      doc.description = newParams.description
     }
     if (newParams.name) {
-        doc.name = newParams.name
+      doc.name = newParams.name;
+    }
+    if (newParams.category) {
+      doc.category = newParams.category;
     }
     if (err) {
       res.status(404);
@@ -86,3 +103,4 @@ module.exports.getAllItems = getAllItems;
 module.exports.deleteItem = deleteItem;
 module.exports.getAnItem = getAnItem;
 module.exports.updateAnItem = updateAnItem;
+module.exports.getAllItemsWithCategory = getAllItemsWithCategory;
