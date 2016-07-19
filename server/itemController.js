@@ -5,23 +5,27 @@ var makeItem = Q.nbind(Item.create, Item);
 var getAll = Q.nbind(Item.find, Item);
 var removeItem = Q.nbind(Item.remove, Item);
 
-var createItem = function(item, callback) {
-  makeItem(item)
+var createItem = function(req, res) {
+  makeItem(req.body)
   .then(function(newItem){
-    callback(newItem);
+    console.log(newItem);
+    res.status(201);
+    res.send(newItem);
   })
   .fail(function(err){
-    console.error(err);
+    res.sendStatus(404);
   });
 };
 
-var getAllItems = function(callback) {
+var getAllItems = function(req, res) {
   getAll({})
   .then(function(items){
-    callback(items);
+    console.log(items);
+    res.status(200);
+    res.json(items);
   })
   .fail(function(err){
-    console.error(err);
+    res.status(404);
   });
 };
 
@@ -57,3 +61,4 @@ var updateAnItem = function(itemName, newParams, callback) {
 }
 module.exports.createItem = createItem;
 module.exports.getAllItems = getAllItems;
+module.exports.deleteItem = deleteItem;
