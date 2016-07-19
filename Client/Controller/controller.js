@@ -17,19 +17,20 @@ angular.module('app', [])
         url: '/listings'
       }).success(function(res) {
         $scope.lists = res;
-      })
-    }
+      });
+    };
 
-    $scope.search = function(query, category){
+    $scope.search = function(category){
       $http({
         method:'GET',
-        url: '/listings/' + query  + '/' + category
+        url: '/listings/category/' + category
       }).success(function(res) {
         $scope.query = res;
-      })
-    }
+      });
+    };
 
     $scope.addItem = function(post){
+      console.log(post);
       $http({
         method:'POST',
         url: '/listings',
@@ -38,11 +39,20 @@ angular.module('app', [])
       refresh();
     };
 
-    $scope.remove = function(id) {
-      $http.delete('/listings/' + id).success(function(res) {
+    $scope.rent = function(item){
+      item.rentable = false;
+      $http({
+        method: 'PUT',
+        url: '/listings/' + item._id,
+        data: item
+      });
+    };
+
+    $scope.remove = function(item) {
+      $http.delete('/listings/' + item._id).success(function(res) {
         refresh();
       });
-    }
+    };
 
 
   });
