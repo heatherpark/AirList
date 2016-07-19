@@ -29,6 +29,7 @@ var getAllItems = function(req, res) {
 };
 
 var deleteItem = function(req, res) {
+  console.log(req.params.id);
   var id = req.params.id;
   removeItem({_id: id})
   .then(function(item){
@@ -61,7 +62,6 @@ var updateAnItem = function(req, res) {
     res.send(doc);
   });
 }
-
 module.exports.createItem = createItem;
 module.exports.getAllItems = getAllItems;
 module.exports.deleteItem = deleteItem;
