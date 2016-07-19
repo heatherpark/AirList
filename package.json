@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node ./server/server.js"
   },
+  "scripts": {
+    "start": "node ./server/server.js"
+  },
   "dependencies": {
     "body-parser": "^1.4.3",
     "express": "^4.4.5",

@@ -1,3 +1,10 @@
 body{
  background-color: green;
 }
+
+.searchResults{
+  background-color: yellow;
+}
+.addDelete{
+  background-color: blue;
+}
