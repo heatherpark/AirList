@@ -41,7 +41,7 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
     authProvider.on('loginFailure', function($location) {
       // If anything goes wrong
         console.log("Login Failure foo!")
-        $location.url('/login');
+        $location.url('#/');
     });
 
  }) //end of config
@@ -79,6 +79,9 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
   }])
 
  .controller('mainController', function($scope, $http, $window){
+
+    $scope.env = $window.location.href.split('#');
+
    $scope.options = [
      {category: "All Departments"},
      {category: "Books"},
@@ -128,9 +131,8 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
    }
 
    $scope.logout = function() {
-    $window.location.href =
-    'https://dilp.auth0.com/v2/logout'
-    //?returnTo=http://www.example.com
+    window.localStorage.clear();
+    $window.location.href ='https://dilp.auth0.com/v2/logout?returnTo=' + $scope.env[0];
    }
 
    $scope.generalListings = function() {
@@ -179,15 +181,13 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
        url: '/listings',
        data: post
      });
-     console.log(post)
      refresh();
      refreshUserListings();
    };
 
    $scope.rent = function(item){
      item.rentable = false;
-     item.renter = $scope.email;
-     console.log(item);
+     item.renter = JSON.parse(window.localStorage.profile).email;
      $http({
        method: 'PUT',
        url: '/listings/' + item._id,
