@@ -9,8 +9,8 @@ var ItemSchema = new mongoose.Schema({
   rentable: Boolean,
   category: String,
   email: String,
-  rentedyBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  lentby: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+  lender: String,
+  renter: String
 });
 
 module.exports = mongoose.model('Item', ItemSchema);
