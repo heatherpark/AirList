@@ -70,7 +70,7 @@
      <div class="row" ng-hide="showme">
        <div class="col-sm-6">
          <h3> View Your Current Listings </h3>
-         <div class="searchResults" ng-repeat="list in yourItems | filter: email | orderBy: 'created_at':true">
+         <div class="searchResults" ng-repeat="list in yourItems | filter: {'email' : email} | orderBy: 'created_at':true">
            <strong> Item Name: </strong>  {{list.name}}
            <br>
            <strong> Item Description: </strong>  {{list.description}}
