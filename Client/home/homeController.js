@@ -112,6 +112,16 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
      });
    };
 
+   var queryUpdater = function() {
+      $http({
+       method:'GET',
+       url: '/listings'
+     }).success(function(res) {
+       $scope.query = res;
+       console.log('updating scope.query')
+     });
+   }
+
    var refreshUserListings = function() {
       $http({
        method:'GET',
@@ -141,6 +151,7 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
        url: '/listings'
      }).success(function(res) {
        $scope.lists = res;
+       console.log(res);
      });
    }
 
@@ -171,7 +182,7 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
      });
     $scope.email = JSON.parse(window.localStorage.profile).email;
     console.log($scope.email);
-     refresh();
+     refreshUserListings();
    }
 
    $scope.addItem = function(post){
@@ -193,6 +204,9 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
        url: '/listings/' + item._id,
        data: item
      });
+     // refresh();
+     // refreshUserListings();
+     // queryUpdater();
    };
 
    $scope.remove = function(item) {
