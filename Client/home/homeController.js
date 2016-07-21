@@ -79,6 +79,9 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
   }])
 
  .controller('mainController', function($scope, $http, $window){
+
+    $scope.env = $window.location.href.split('#');
+
    $scope.options = [
      {category: "All Departments"},
      {category: "Books"},
@@ -129,7 +132,7 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
 
    $scope.logout = function() {
     window.localStorage.clear();
-    $window.location.href ='https://dilp.auth0.com/v2/logout?returnTo=http://127.0.0.1:9000'
+    $window.location.href ='https://dilp.auth0.com/v2/logout?returnTo=' + $scope.env[0];
    }
 
    $scope.generalListings = function() {
@@ -178,7 +181,6 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
        url: '/listings',
        data: post
      });
-     console.log(post)
      refresh();
      refreshUserListings();
    };
@@ -186,8 +188,6 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
    $scope.rent = function(item){
      item.rentable = false;
      item.renter = JSON.parse(window.localStorage.profile).email;
-     console.log("renter is ", item.renter )
-     console.log(item);
      $http({
        method: 'PUT',
        url: '/listings/' + item._id,

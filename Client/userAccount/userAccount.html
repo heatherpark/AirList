@@ -21,13 +21,15 @@
    <div class="container">
      <div class="row">
        <h3> List an Item </h3>
-       <form class="form-horizontal">
-       <select ng-model="list.category" class="form-control listingClass" ng-init="list.category = addCategory[0].category" >
+       <form>
+       <div class="form-group">
+        <label> Category</label>
+        <select ng-model="list.category" class="form-control listingClass" ng-init="list.category = addCategory[0].category" >
          <option ng-repeat="y in addCategory" value="{{y.category}}">
            {{y.category}}
          </option>
-       </select>
-
+        </select>
+       </div>
        <div class="form-group">
         <input ng-model="list.name" placeholder="Item Name"></input>
        </div>
@@ -35,7 +37,7 @@
         <textarea ng-model="list.description"  placeholder="Description" class="description"></textarea>
        </div>
        <div class="form-group">
-        <input ng-model="list.price" placeholder="Price"></input>
+        <input ng-model="list.price" placeholder="Price" ></input>
        </div>
        <div class="form-group">
         <input ng-model="list.days" placeholder="Number of Days"></input>
