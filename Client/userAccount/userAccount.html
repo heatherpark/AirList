@@ -18,21 +18,33 @@
      </div>
    </nav>
 
-     <h3> List an Item </h3>
-     <select ng-model="list.category" class="form-control listingClass" ng-init="list.category = addCategory[0].category" >
-       <option ng-repeat="y in addCategory" value="{{y.category}}">
-         {{y.category}}
-       </option>
-     </select>
+   <div class="container">
+     <div class="row">
+       <h3> List an Item </h3>
+       <form class="form-horizontal">
+       <select ng-model="list.category" class="form-control listingClass" ng-init="list.category = addCategory[0].category" >
+         <option ng-repeat="y in addCategory" value="{{y.category}}">
+           {{y.category}}
+         </option>
+       </select>
 
-     <div ><input ng-model="list.name" placeholder="Item Name"></input></div>
-     <div><textarea ng-model="list.description"  placeholder="Description" class="description"></textarea> </div>
-     <div><input ng-model="list.price" placeholder="Price"></input></div>
-     <div><input ng-model="list.days" placeholder="Number of Days"></input></div>
-     <span ng-model="list.rentable" ng-init="list.rentable=true">
-     <button ng-click="addItem(list)" type="button" class="btn btn-primary">Add</button>
+       <div class="form-group">
+        <input ng-model="list.name" placeholder="Item Name"></input>
+       </div>
+       <div class="form-group">
+        <textarea ng-model="list.description"  placeholder="Description" class="description"></textarea>
+       </div>
+       <div class="form-group">
+        <input ng-model="list.price" placeholder="Price"></input>
+       </div>
+       <div class="form-group">
+        <input ng-model="list.days" placeholder="Number of Days"></input>
+       </div>
+       <span ng-model="list.rentable" ng-init="list.rentable=true">
+       <button ng-click="addItem(list)" type="button" class="btn btn-primary">Add</button>
+       </form>
      </div>
-   </div>
+    </div>
 
    <hr>
 
@@ -57,7 +69,7 @@
 
        <div class="col-sm-6">
          <h3> Items You Are Renting </h3>
-         <div class="searchResults" ng-repeat="list in yourItems | filter: renter | orderBy: 'created_at':true">
+         <div class="searchResults" ng-repeat="list in yourItems | filter: {renter: email} | orderBy: 'created_at':true">
            <strong> Item Name: </strong>  {{list.name}}
            <br>
            <strong> Item Description: </strong>  {{list.description}}
