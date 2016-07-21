@@ -10,6 +10,7 @@
 
          <input type="text" ng-model="searchBox" placeholder="Search items to rent" class="form-control">
          <button type="button" class="btn btn-primary" ng-click="showme=true; search(selectedOption)">Search</button>
+         <button type="button" class="btn btn-primary pull-right" ng-click="logout()">Log Out</button>
          <button type="button" class="btn btn-primary pull-right" ng-click="goToUserAcc()">Your Account</button>
          <button type="button" class="btn btn-primary pull-right" ng-click="showme=false">All Listings</button>
        </div>
@@ -17,12 +18,12 @@
    </nav>
 
 </div>
-     <hr>
 
+<!-- search results -->
    <div class="container" ng-show="showme" ng-init="login()">
      <div class="row" ng-show="showme">
        <h2> Search Results: </h2>
-       <div class="searchResults" ng-init="refresh()" ng-repeat="list in query | filter:searchBox | orderBy: 'category'">
+       <div ng-init="refresh()" ng-repeat="list in query | filter:searchBox | orderBy: 'category'">
          <strong> Item Name: </strong> {{list.name}}
          <br>
          <strong> Category: </strong> {{list.category}}
@@ -40,12 +41,11 @@
      </div>
    </div>
 
-     <hr>
      <!-- display after adding/deleting items -->
    <div class="container" ng-init="generalListings()" ng-hide="showme">
      <div class="row" ng-hide="showme">
        <h2 > All Listings: </h2>
-       <div class="addDelete" ng-repeat="list in lists">
+       <div ng-repeat="list in lists">
           <strong> Item Name: </strong> {{list.name}}
          <br>
          <strong> Category: </strong> {{list.category}}
