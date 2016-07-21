@@ -1,6 +1,6 @@
 <nav class="navbar navbar-inverse nav-fixed-top">
      <div class="container ">
-       <a class="navbar-brand"> AirList </a>
+       <a class="navbar-brand" href='#/'> AirList </a>
        <div class="navbar-form ">
          <select ng-model="selectedOption" ng-init="selectedOption = options[0].category" class="form-control">
            <option ng-repeat="x in options" value="{{x.category}}">
@@ -10,7 +10,7 @@
 
          <input type="text" ng-model="searchBox" placeholder="Search items to rent" class="form-control">
          <button type="button" class="btn btn-primary" ng-click="showme=true; search(selectedOption)">Search</button>
-         <button type="button" class="btn btn-primary pull-right" ng-click="login()">Log In</button>
+         <button type="button" class="btn btn-primary pull-right" ng-click="goToUserAcc()">Your Account</button>
          <button type="button" class="btn btn-primary pull-right" ng-click="showme=false">All Listings</button>
        </div>
      </div>
@@ -19,11 +19,13 @@
 </div>
      <hr>
 
-   <div class="container" ng-show="showme">
+   <div class="container" ng-show="showme" ng-init="login()">
      <div class="row" ng-show="showme">
        <h2> Search Results: </h2>
        <div class="searchResults" ng-init="refresh()" ng-repeat="list in query | filter:searchBox | orderBy: 'category'">
          <strong> Item Name: </strong> {{list.name}}
+         <br>
+         <strong> Category: </strong> {{list.category}}
          <br>
          <strong> Item Description: </strong> {{list.description}}
          <br>
@@ -45,6 +47,8 @@
        <h2 > All Listings: </h2>
        <div class="addDelete" ng-repeat="list in lists">
           <strong> Item Name: </strong> {{list.name}}
+         <br>
+         <strong> Category: </strong> {{list.category}}
          <br>
           <strong> Item Description: </strong> {{list.description}}
          <br>
