@@ -114,6 +114,9 @@ module.exports.updateAnItem = function(req, res) {
     if (newParams.renter) {
       doc.renter = newParams.renter;
     }
+    if (newParams.hasOwnProperty('rentable')) {
+      doc.rentable = newParams.rentable;
+    }
 
     if (err) {
       res.status(404);
