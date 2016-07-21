@@ -173,7 +173,7 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
    }
 
    $scope.addItem = function(post){
-    post.email = email;
+    post.email = JSON.parse(window.localStorage.profile).email;
      $http({
        method:'POST',
        url: '/listings',
