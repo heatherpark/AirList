@@ -124,6 +124,7 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
 
    $scope.viewAllListings = function() {
     $window.location.href = $window.location.origin;
+
    }
 
    $scope.logout = function() {
