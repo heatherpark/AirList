@@ -72,7 +72,9 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
 
  .controller('LoginCtrl', ['$scope', 'auth', function ($scope, auth) {
     $scope.login = function(){
-      auth.signin();
+      if(!window.localStorage.profile) {
+        auth.signin();
+      }
     }
   }])
 
@@ -114,6 +116,14 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
      }).success(function(res) {
        $scope.yourItems = res;
      });
+   }
+
+   $scope.goToUserAcc = function() {
+    $window.location.href  = $window.location.href + 'userAccount'
+   }
+
+   $scope.viewAllListings = function() {
+    $window.location.href = $window.location.origin;
    }
 
    $scope.logout = function() {
@@ -175,6 +185,8 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
 
    $scope.rent = function(item){
      item.rentable = false;
+     item.renter = $scope.email;
+     console.log(item);
      $http({
        method: 'PUT',
        url: '/listings/' + item._id,

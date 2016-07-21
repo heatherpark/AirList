@@ -9,7 +9,6 @@ var ItemSchema = new mongoose.Schema({
   rentable: Boolean,
   category: String,
   email: String,
-  lender: String,
   renter: String
 });
 

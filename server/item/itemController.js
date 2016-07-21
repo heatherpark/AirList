@@ -1,11 +1,13 @@
 var Item = require('./itemModel.js');
 var Q = require('q');
 
+// promisify
 var makeItem = Q.nbind(Item.create, Item);
 var getAll = Q.nbind(Item.find, Item);
 var removeItem = Q.nbind(Item.remove, Item);
 var getItem = Q.nbind(Item.findOne, Item);
 
+// create a new item in database
 module.exports.createItem = function(req, res) {
   makeItem(req.body)
   .then(function(newItem){
@@ -18,6 +20,7 @@ module.exports.createItem = function(req, res) {
   });
 };
 
+// fetch all items from database
 module.exports.getAllItems = function(req, res) {
   getAll({})
   .then(function(items){
@@ -108,6 +111,10 @@ module.exports.updateAnItem = function(req, res) {
     if (newParams.category) {
       doc.category = newParams.category;
     }
+    if (newParams.renter) {
+      doc.renter = newParams.renter;
+    }
+
     if (err) {
       res.status(404);
       res.send(err);
