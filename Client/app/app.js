@@ -9,7 +9,7 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
 
     $routeProvider
     .when( '/', {
-      controller: 'LoginCtrl',
+      controller: 'loginController',
       templateUrl: 'home/home.html',
       requiresLogin: false
     })
@@ -18,10 +18,10 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
       templateUrl: 'userAccount/userAccount.html',
       requiresLogin: true
     })
-    .when( '/login', {
-      controller: 'LoginCtrl',
-      templateUrl: 'login/login.html'
-    })
+    // .when( '/login', {
+    //   controller: 'LoginCtrl',
+    //   templateUrl: 'login/login.html'
+    // })
 
     //Called when login is successful
     authProvider.on('loginSuccess', ['$location', 'profilePromise', 'idToken', 'store', function($location, profilePromise, idToken, store) {
