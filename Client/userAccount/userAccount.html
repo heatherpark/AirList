@@ -10,7 +10,7 @@
      <input type="text" ng-model="searchBox" placeholder="Search items to rent" class="form-control">
      <button type="button" class="btn btn-primary" ng-click="showme=true; search(selectedOption)">Search</button>
      <button type="button" class="btn btn-primary pull-right" ng-click="logout()">Log Out</button>
-     <button type="button" class="btn btn-primary pull-right" ng-click="showme=false">Your Listings</button>
+     <button type="button" class="btn btn-primary pull-right" ng-click="showme=false; yourListings()">Your Listings</button>
      <button type="button" class="btn btn-primary pull-right" ng-click="viewAllListings()">All Listings</button>
    </div>
  </div>
@@ -63,7 +63,7 @@
 
      <div class="form-group">
       <div class="col-sm-offset-3 col-sm-9">
-        <button ng-click="addItem(list)" type="button" class="btn btn-primary">Add</button>
+        <button ng-click="addItem(list)"  type="button" class="btn btn-primary">Add</button>
       </div>
      </div>
    </form>
@@ -101,10 +101,13 @@
 <!-- END -->
 
 <!-- ITEMS USER IS RENTING -->
+
    <div class="col-sm-6">
      <h3> Your Rentals: </h3>
      <br>
-     <div ng-repeat="list in yourItems | filter: {renter: email} | orderBy: 'created_at':true">
+     <div ng-repeat="list in yourItems | filter: {'renter': email} | orderBy: 'created_at':true">
+      <!-- <div ng-repeat="list in yourItems | filter: {renter: email} | orderBy: 'created_at':true"> -->
+
       <div class="col-xs-6 col-md-3">
         <a class="thumbnail">
           <img src="../images/box.png">
@@ -155,6 +158,7 @@
        <br>
        <strong> {{ list.rentable  ?  "Available Now"  : "Not Available" }} </strong>
        <button class="btn-success" ng-click="rent(list)">Rent</button>
+       <button class = "btn-primary" ng-click="sendEmail(list)">Contact Owner</button>
       </div>
      </div>
   </div>

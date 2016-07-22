@@ -26,18 +26,13 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
    ];
 
    $scope.refresh = function(){
-     mainFactory.refreshed().then(function(res){ $scope.lists = res.data});
+     mainFactory.refreshed().then(function(res){ $scope.lists = res.data;
+     });
    }
 
-    $scope.queryUpdater = function(url){
-      if (!url){
-     mainFactory.refreshed().then(function(res){ $scope.query = res.data});
-
-      } else {
-        mainFactory.refreshed().then(function(res){ $scope.query = res.data});
-      }
+    $scope.queryUpdater = function(){
+     mainFactory.refreshed().then(function(data){ $scope.query = data});
    }
-
 
    var refreshUserListings = function() {
       $http({
@@ -48,14 +43,12 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
      });
    }
 
-
    $scope.goToUserAcc = function() {
     $window.location.href  = $window.location.href + 'userAccount'
    }
 
    $scope.viewAllListings = function() {
     $window.location.href = $window.location.origin;
-
    }
 
    $scope.generalListings = function() {
@@ -84,8 +77,8 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
      }
    };
 
-
    $scope.yourListings = function() {
+    $scope.email = JSON.parse(window.localStorage.profile).email;
      refreshUserListings();
    }
 
@@ -114,13 +107,11 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
      item.rentable = true;
      delete item.renter;
      var newItem = item;
-     console.log(newItem);
      $http({
        method: 'PUT',
        url: '/listings/' + item._id,
        data: newItem
      });
-     console.log('returning item')
     refreshUserListings();
    };
 
@@ -135,12 +126,12 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
 
  .factory('mainFactory', function($http, $window) {
 
-    var refreshed = function() {
-      return $http.get('/listings');
-    };
-
+  var refreshed = function() {
+    return $http.get('/listings');
+  };
 
   return {
     refreshed:refreshed,
   }
+
  });
