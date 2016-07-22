@@ -25,30 +25,40 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
      {category: "Toys/Games"}
    ];
 
-   var refresh = function() {
-      $http({
-       method:'GET',
-       url: '/listings'
-     }).success(function(res) {
-       $scope.lists = res;
-     });
-   };
-
-   var queryUpdater = function() {
-      $http({
-       method:'GET',
-       url: '/listings'
-     }).success(function(res) {
-       $scope.query = res;
-       console.log('updating scope.query')
-     });
+   $scope.refresh = function(){
+     mainFactory.refreshed().then(function(data){ $scope.lists = data});
    }
+
+   // var refresh = function() {
+   //    $http({
+   //     method:'GET',
+   //     url: '/listings'
+   //   }).success(function(res) {
+   //     $scope.lists = res;
+   //   });
+   // };
+
+    $scope.queryUpdater = function(){
+     mainFactory.refreshed().then(function(data){ $scope.query = data});
+   }
+
+   // var queryUpdater = function() {
+   //    $http({
+   //     method:'GET',
+   //     url: '/listings'
+   //   }).success(function(res) {
+   //     $scope.query = res;
+   //     console.log('updating scope.query')
+   //   });
+   // }
+
 
    var refreshUserListings = function() {
       $http({
        method:'GET',
        url: '/listings'
      }).success(function(res) {
+      //console.log(res)
        $scope.yourItems = res;
      });
    }
@@ -110,7 +120,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
        url: '/listings',
        data: post
      });
-     refresh();
+     $scope.refresh();
      refreshUserListings();
    };
 
@@ -133,23 +143,33 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
        url: '/listings/' + item._id,
        data: newItem
      });
-    // refreshUserListings();
+    refreshUserListings();
    };
 
    $scope.remove = function(item) {
      $http.delete('/listings/' + item._id).success(function(res) {
-       refresh();
-       refreshUserListings();
+      refreshUserListings();
      });
    };
- }).factory('mainFactory', function($http, $window) {
-  var refresh = function() {
-    $http({
-     method:'GET',
-     url: '/listings'
-    }).success(function(res) {
-     $scope.lists = res;
-    });
+ })
+
+//start of factory
+
+ .factory('mainFactory', function($http, $window) {
+
+  var fetch = function(){
+    var result;
+    return $http({
+      method: 'GET',
+      url: '/listings',
+    }).then(function(res){
+      result = res.data;
+      return result;
+    })
+  }
+
+  var refreshed = function() {
+    return $http.get('/listings');
   };
 
    var queryUpdater = function() {
@@ -251,7 +271,8 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
      });
    };
 
-  return {refresh:refresh,
+  return {
+    refreshed:refreshed,
     queryUpdater:queryUpdater,
     refreshUserListings:refreshUserListings,
     generalListings:generalListings,

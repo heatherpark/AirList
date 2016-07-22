@@ -1,3 +1,5 @@
+//NOT NEEDED BUT AVAILABLE FOR USE
+
 var User = require('./userModel.js');
 var Q = require('q');
 

@@ -1,3 +1,6 @@
+//NOT NEEDED BUT AVAILABLE FOR USE
+
+
 var mongoose = require('mongoose');
 var Item = require('../item/itemModel.js');
 

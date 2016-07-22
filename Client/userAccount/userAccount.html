@@ -1,3 +1,4 @@
+<!-- BEGIN NAV -->
 <nav class="navbar navbar-inverse nav-fixed-top">
  <div class="container">
    <a class="navbar-brand" href='#/'> AirList </a>
@@ -14,7 +15,9 @@
    </div>
  </div>
 </nav>
+<!-- END NAV -->
 
+<!-- BEGIN ITEM ADD SECTION -->
 <div class="container">
  <div class="row">
    <h3> List an Item </h3>
@@ -66,9 +69,9 @@
    </form>
  </div>
 </div>
-
+<!-- END ITEM ADD SECTION -->
 <hr>
-
+<!-- USER'S ITEMS FOR RENT -->
 <div class="container" ng-init="yourListings()" ng-hide="showme">
  <div class="row" ng-hide="showme">
 
@@ -95,7 +98,9 @@
        <hr>
      </div>
    </div>
+<!-- END -->
 
+<!-- ITEMS USER IS RENTING -->
    <div class="col-sm-6">
      <h3> Your Rentals: </h3>
      <br>
@@ -121,9 +126,10 @@
 
  </div>
 </div>
+<!-- END -->
 
-
-<div class="container" g-show="showme">
+<!-- SEARCH RESULTS IF SEARCHING ON USER PROFILE PAGE -->
+<div class="container" ng-show="showme">
   <div class="row" ng-show="showme">
    <button ng-click="showme=false; yourListings()" type="button" class="btn btn-primary">Back to your listings</button>
    <h2> Search Results: </h2>

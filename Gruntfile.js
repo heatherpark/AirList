@@ -1,3 +1,7 @@
+//Grunt has concat, jsHint, uglify, css tasks that places the output files into the production folder. We created
+//this in the beginning thinking we would use it but we got too lazy. For the legacy team, you can refactor the src and
+//destination paths below to make everything into one file in the production folder if y'all wish.
+
 
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
