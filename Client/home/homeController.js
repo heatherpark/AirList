@@ -1,86 +1,8 @@
-angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'app.userAccountController', 'app.loginController'])
+angular.module('app.homeController', ['app.userAccountController', 'app.loginController'])
 
-   .config(function myAppConfig ($routeProvider, authProvider){
-    authProvider.init({
-      domain: 'dilp.auth0.com',
-      clientID: 'khcIzPKbh7xrfincGzpmj3qspWqAEgWb',
-      loginUrl: '/login'
-    });
+ .controller('mainController', function($scope, $http, $window, mainFactory){
 
-    $routeProvider
-    .when( '/', {
-      controller: 'LoginCtrl',
-      templateUrl: 'home/home.html',
-      requiresLogin: false
-    })
-    .when( '/userAccount', {
-      controller: 'mainController',
-      templateUrl: 'userAccount/userAccount.html',
-      requiresLogin: true
-    })
-    .when( '/login', {
-      controller: 'LoginCtrl',
-      templateUrl: 'login/login.html'
-    })
-
-    //Called when login is successful
-    authProvider.on('loginSuccess', ['$location', 'profilePromise', 'idToken', 'store', function($location, profilePromise, idToken, store) {
-      // Successfully log in
-      // Access to user profile and token
-      profilePromise.then(function(profile){
-        // profile
-            store.set('profile', profile);
-            store.set('token', idToken);
-            email = profile.email;
-
-      });
-      $location.url('/userAccount');
-    }]);
-
-    //Called when login fails
-    authProvider.on('loginFailure', function($location) {
-      // If anything goes wrong
-        console.log("Login Failure foo!")
-        $location.url('#/');
-    });
-
- }) //end of config
-
-.run(['$rootScope', 'auth', 'store', 'jwtHelper', '$location', function($rootScope, auth, store, jwtHelper, $location) {
-  // Listen to a location change event
-  $rootScope.$on('$locationChangeStart', function() {
-    // Grab the user's token
-    var token = store.get('token');
-    // Check if token was actually stored
-    if (token) {
-      // Check if token is yet to expire
-      if (!jwtHelper.isTokenExpired(token)) {
-        // Check if the user is not authenticated
-        if (!auth.isAuthenticated) {
-          // Re-authenticate with the user's profile
-          // Calls authProvider.on('authenticated')
-          auth.authenticate(store.get('profile'), token);
-        }
-      } else {
-        // Use the refresh token to get a new idToken
-        auth.refreshIdToken(token);
-      }
-    }
-
-  });
-}])
-
- .controller('LoginCtrl', ['$scope', 'auth', function ($scope, auth) {
-    $scope.login = function(){
-      if(!window.localStorage.profile) {
-        auth.signin();
-      }
-    }
-  }])
-
- .controller('mainController', function($scope, $http, $window){
-
-    $scope.env = $window.location.href.split('#');
+   $scope.env = $window.location.href.split('#');
 
    $scope.options = [
      {category: "All Departments"},
@@ -131,6 +53,7 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
      });
    }
 
+
    $scope.goToUserAcc = function() {
     $window.location.href  = $window.location.href + 'userAccount'
    }
@@ -138,11 +61,6 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
    $scope.viewAllListings = function() {
     $window.location.href = $window.location.origin;
 
-   }
-
-   $scope.logout = function() {
-    window.localStorage.clear();
-    $window.location.href ='https://dilp.auth0.com/v2/logout?returnTo=' + $scope.env[0];
    }
 
    $scope.generalListings = function() {
@@ -224,6 +142,124 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
        refreshUserListings();
      });
    };
+ }).factory('mainFactory', function($http, $window) {
+  var refresh = function() {
+    $http({
+     method:'GET',
+     url: '/listings'
+    }).success(function(res) {
+     $scope.lists = res;
+    });
+  };
 
+   var queryUpdater = function() {
+    $http({
+     method:'GET',
+     url: '/listings'
+    }).success(function(res) {
+     $scope.query = res;
+     console.log('updating scope.query')
+    });
+   };
 
+  var refreshUserListings = function() {
+    $http({
+     method:'GET',
+     url: '/listings'
+     }).success(function(res) {
+       $scope.yourItems = res;
+     });
+   };
+
+   var generalListings = function() {
+      $http({
+       method:'GET',
+       url: '/listings'
+     }).success(function(res) {
+       $scope.lists = res;
+       console.log(res);
+     });
+   };
+
+   var search = function(category){
+     if(category === "All Departments") {
+        $http({
+         method:'GET',
+         url: '/listings'
+       }).success(function(res) {
+         $scope.query = res;
+       });
+     } else {
+       $http({
+         method:'GET',
+         url: '/listings/category/' + category
+       }).success(function(res) {
+         $scope.query = res;
+       });
+     }
+   };
+
+   var yourListings = function() {
+      $http({
+       method:'GET',
+       url: '/listings'
+     }).success(function(res) {
+       $scope.yourItems = res;
+     });
+    $scope.email = JSON.parse(window.localStorage.profile).email;
+    console.log($scope.email);
+     refreshUserListings();
+   };
+
+  var addItem = function(post){
+    post.email = JSON.parse(window.localStorage.profile).email;
+     $http({
+       method:'POST',
+       url: '/listings',
+       data: post
+     });
+     refresh();
+     refreshUserListings();
+   };
+
+  var rent = function(item){
+     item.rentable = false;
+     item.renter = JSON.parse(window.localStorage.profile).email;
+     $http({
+       method: 'PUT',
+       url: '/listings/' + item._id,
+       data: item
+     });
+   };
+
+   var returnItem = function(item){
+     item.rentable = true;
+     delete item.renter;
+     var newItem = item;
+     $http({
+       method: 'PUT',
+       url: '/listings/' + item._id,
+       data: newItem
+     });
+    // refreshUserListings();
+   };
+
+   var remove = function(item) {
+     $http.delete('/listings/' + item._id).success(function(res) {
+       refresh();
+       refreshUserListings();
+     });
+   };
+
+  return {refresh:refresh,
+    queryUpdater:queryUpdater,
+    refreshUserListings:refreshUserListings,
+    generalListings:generalListings,
+    search: search,
+    yourListings: yourListings,
+    addItem: addItem,
+    rent:rent,
+    returnItem:returnItem,
+    remove:remove
+  }
  });
