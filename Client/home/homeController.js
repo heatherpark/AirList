@@ -124,7 +124,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
      });
    };
 
-   $scope.return = function(item){
+   $scope.returnItem = function(item){
      item.rentable = true;
      delete item.renter;
      var newItem = item;
