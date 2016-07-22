@@ -111,12 +111,16 @@ module.exports.updateAnItem = function(req, res) {
     if (newParams.category) {
       doc.category = newParams.category;
     }
+    if (!newParams.renter) {
+      doc.renter = '';
+    }
     if (newParams.renter) {
       doc.renter = newParams.renter;
     }
     if (newParams.hasOwnProperty('rentable')) {
       doc.rentable = newParams.rentable;
     }
+
 
     if (err) {
       res.status(404);
