@@ -103,7 +103,6 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
    $scope.rent = function(item){
      item.rentable = false;
      item.renter = JSON.parse(window.localStorage.profile).email;
-     var url =
      $http({
        method: 'PUT',
        url: '/listings/' + item._id,
@@ -136,7 +135,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
 
  .factory('mainFactory', function($http, $window) {
 
-    refreshed = function() {
+    var refreshed = function() {
       return $http.get('/listings');
     };
 
