@@ -14,7 +14,7 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
       requiresLogin: false
     })
     .when( '/userAccount', {
-      controller: 'mainController',
+      controller: 'loginController',
       templateUrl: 'userAccount/userAccount.html',
       requiresLogin: true
     })

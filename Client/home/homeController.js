@@ -25,23 +25,13 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
      {category: "Toys/Games"}
    ];
 
-   var refresh = function() {
-      $http({
-       method:'GET',
-       url: '/listings'
-     }).success(function(res) {
-       $scope.lists = res;
+   $scope.refresh = function(){
+     mainFactory.refreshed().then(function(res){ $scope.lists = res.data;
      });
-   };
+   }
 
-   var queryUpdater = function() {
-      $http({
-       method:'GET',
-       url: '/listings'
-     }).success(function(res) {
-       $scope.query = res;
-       console.log('updating scope.query')
-     });
+    $scope.queryUpdater = function(){
+     mainFactory.refreshed().then(function(data){ $scope.query = data});
    }
 
    var refreshUserListings = function() {
@@ -53,24 +43,20 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
      });
    }
 
-
    $scope.goToUserAcc = function() {
     $window.location.href  = $window.location.href + 'userAccount'
    }
 
    $scope.viewAllListings = function() {
     $window.location.href = $window.location.origin;
-
    }
 
    $scope.generalListings = function() {
-      $http({
-       method:'GET',
-       url: '/listings'
-     }).success(function(res) {
-       $scope.lists = res;
-       console.log(res);
-     });
+    mainFactory.refreshed().then(function(res){
+      console.log(res);
+      console.log(res.data);
+      $scope.lists = res.data
+    });
    }
 
    $scope.search = function(category){
@@ -92,14 +78,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
    };
 
    $scope.yourListings = function() {
-      $http({
-       method:'GET',
-       url: '/listings'
-     }).success(function(res) {
-       $scope.yourItems = res;
-     });
     $scope.email = JSON.parse(window.localStorage.profile).email;
-    console.log($scope.email);
      refreshUserListings();
    }
 
@@ -110,7 +89,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
        url: '/listings',
        data: post
      });
-     refresh();
+     $scope.refresh();
      refreshUserListings();
    };
 
@@ -133,133 +112,26 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
        url: '/listings/' + item._id,
        data: newItem
      });
-    // refreshUserListings();
+    refreshUserListings();
    };
 
    $scope.remove = function(item) {
      $http.delete('/listings/' + item._id).success(function(res) {
-       refresh();
-       refreshUserListings();
+      refreshUserListings();
      });
    };
- }).factory('mainFactory', function($http, $window) {
-  var refresh = function() {
-    $http({
-     method:'GET',
-     url: '/listings'
-    }).success(function(res) {
-     $scope.lists = res;
-    });
+ })
+
+//start of factory
+
+ .factory('mainFactory', function($http, $window) {
+
+  var refreshed = function() {
+    return $http.get('/listings');
   };
 
-   var queryUpdater = function() {
-    $http({
-     method:'GET',
-     url: '/listings'
-    }).success(function(res) {
-     $scope.query = res;
-     console.log('updating scope.query')
-    });
-   };
-
-  var refreshUserListings = function() {
-    $http({
-     method:'GET',
-     url: '/listings'
-     }).success(function(res) {
-       $scope.yourItems = res;
-     });
-   };
-
-   var generalListings = function() {
-      $http({
-       method:'GET',
-       url: '/listings'
-     }).success(function(res) {
-       $scope.lists = res;
-       console.log(res);
-     });
-   };
-
-   var search = function(category){
-     if(category === "All Departments") {
-        $http({
-         method:'GET',
-         url: '/listings'
-       }).success(function(res) {
-         $scope.query = res;
-       });
-     } else {
-       $http({
-         method:'GET',
-         url: '/listings/category/' + category
-       }).success(function(res) {
-         $scope.query = res;
-       });
-     }
-   };
-
-   var yourListings = function() {
-      $http({
-       method:'GET',
-       url: '/listings'
-     }).success(function(res) {
-       $scope.yourItems = res;
-     });
-    $scope.email = JSON.parse(window.localStorage.profile).email;
-    console.log($scope.email);
-     refreshUserListings();
-   };
-
-  var addItem = function(post){
-    post.email = JSON.parse(window.localStorage.profile).email;
-     $http({
-       method:'POST',
-       url: '/listings',
-       data: post
-     });
-     refresh();
-     refreshUserListings();
-   };
-
-  var rent = function(item){
-     item.rentable = false;
-     item.renter = JSON.parse(window.localStorage.profile).email;
-     $http({
-       method: 'PUT',
-       url: '/listings/' + item._id,
-       data: item
-     });
-   };
-
-   var returnItem = function(item){
-     item.rentable = true;
-     delete item.renter;
-     var newItem = item;
-     $http({
-       method: 'PUT',
-       url: '/listings/' + item._id,
-       data: newItem
-     });
-    // refreshUserListings();
-   };
-
-   var remove = function(item) {
-     $http.delete('/listings/' + item._id).success(function(res) {
-       refresh();
-       refreshUserListings();
-     });
-   };
-
-  return {refresh:refresh,
-    queryUpdater:queryUpdater,
-    refreshUserListings:refreshUserListings,
-    generalListings:generalListings,
-    search: search,
-    yourListings: yourListings,
-    addItem: addItem,
-    rent:rent,
-    returnItem:returnItem,
-    remove:remove
+  return {
+    refreshed:refreshed,
   }
+
  });

@@ -44,30 +44,6 @@ module.exports.getAllItemsWithCategory = function(req, res) {
   });
 };
 
-module.exports.getAllLentItemsWithUser = function(req, res) {
-  var user = req.params.user;
-  getAll({lentby: user})
-  .then(function(item){
-    res.status(200);
-    res.json(items);
-  })
-  .fail(function(err){
-    res.sendStatus(404);
-  });
-};
-
-module.exports.getAllRentedItemsWithUser = function(req, res) {
-  var user = req.params.user;
-  getAll({rentedyBy: user})
-  .then(function(item){
-    res.status(200);
-    res.json(items);
-  })
-  .fail(function(err){
-    res.sendStatus(404);
-  });
-};
-
 module.exports.getAnItem = function(req, res) {
   var id = req.params.id;
   getItem({_id:id})
@@ -96,28 +72,28 @@ module.exports.updateAnItem = function(req, res) {
   var newParams = req.body;
 
   Item.findOne({_id: id}, function(err, doc) {
-    if (newParams.days) {
+    if (newParams.days) {  //UPDATE DAYS (RENTAL PERIOD)
       doc.days = newParams.days;
     }
-    if (newParams.price) {
+    if (newParams.price) { //UPDATE PRICE
       doc.price = newParams.price;
     }
-    if (newParams.description) {
+    if (newParams.description) {  //UPDATE DESCRIPTION
       doc.description = newParams.description
     }
-    if (newParams.name) {
+    if (newParams.name) {   //UPDATE ITEM NAME
       doc.name = newParams.name;
     }
-    if (newParams.category) {
+    if (newParams.category) {   //UPDATE ITEM CATEGORY
       doc.category = newParams.category;
     }
-    if (!newParams.renter) {
+    if (!newParams.renter) {   //UPDATE PERSON WHO'S RENTING (WHEN RETURN ITEM BUTTON IS PRESSED)
       doc.renter = '';
     }
-    if (newParams.renter) {
+    if (newParams.renter) {    //UPDATE PERSON WHO'S RENTING (WHEN RENT BUTTON IS PRESSED)
       doc.renter = newParams.renter;
     }
-    if (newParams.hasOwnProperty('rentable')) {
+    if (newParams.hasOwnProperty('rentable')) {    //UPDATE ITEM'S RENTABLE AS TRUE/FALSE
       doc.rentable = newParams.rentable;
     }
 
