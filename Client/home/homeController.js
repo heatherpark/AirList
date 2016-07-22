@@ -204,9 +204,18 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
        url: '/listings/' + item._id,
        data: item
      });
-     // refresh();
-     // refreshUserListings();
-     // queryUpdater();
+   };
+
+   $scope.return = function(item){
+     item.rentable = true;
+     delete item.renter;
+     var newItem = item;
+     $http({
+       method: 'PUT',
+       url: '/listings/' + item._id,
+       data: newItem
+     });
+    // refreshUserListings();
    };
 
    $scope.remove = function(item) {
