@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Jeff Lam
+  - __Scrum Master__: Mark Pruett
+  - __Development Team Members__: Sujin Lee, Christopher Heo
 
 ## Table of Contents
 
@@ -20,15 +20,18 @@
 
 ## Usage
 
-> Some usage instructions
+> AirList is a platform for users to come together and share items. A hybrid between Craigslist and AirBnb, AirList fills a need currently lacking in the sharing economy.
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Node 0.12.15 or higher
+- MongoDB
+- Body-Parser 1.4.3
+- Express ^4.4.5
+- Mongoose ^4.5.4
+- q ^1.4.1
+- Grunt ^0.4.5
+
 
 ## Development
 
@@ -37,9 +40,7 @@
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
 ```
 
 ### Roadmap
