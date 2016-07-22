@@ -26,15 +26,15 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
    ];
 
    $scope.refresh = function(){
-     mainFactory.refreshed().then(function(data){ $scope.lists = data});
+     mainFactory.refreshed().then(function(res){ $scope.lists = res.data});
    }
 
     $scope.queryUpdater = function(url){
       if (!url){
-     mainFactory.refreshed().then(function(data){ $scope.query = data});
+     mainFactory.refreshed().then(function(res){ $scope.query = res.data});
 
       } else {
-        mainFactory.refreshed().then(function(data){ $scope.query = data});
+        mainFactory.refreshed().then(function(res){ $scope.query = res.data});
       }
    }
 
@@ -115,6 +115,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
      item.rentable = true;
      delete item.renter;
      var newItem = item;
+     console.log(newItem);
      $http({
        method: 'PUT',
        url: '/listings/' + item._id,
