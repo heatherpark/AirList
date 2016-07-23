@@ -9,7 +9,9 @@ var ItemSchema = new mongoose.Schema({
   rentable: Boolean,    //IS ITEM AVAILABLE FOR RENT?
   category: String,
   email: String,        //EMAIL ADDRESS OF OWNER
-  renter: String        //EMAIL ADDRESS OF PERSON RENTING ITEM
+  renter: String,        //EMAIL ADDRESS OF PERSON RENTING ITEM
+  latitude: Number,
+  longitude: Number
 });
 
 module.exports = mongoose.model('Item', ItemSchema);

@@ -81,7 +81,7 @@
      <div ng-repeat="list in yourItems | filter: {'email' : email} | orderBy: 'created_at':true">
       <div class="col-xs-6 col-md-3">
         <a class="thumbnail">
-          <img src="../images/box.png">
+          <img src="../images/{{list.category}}.png">
         </a>
       </div>
        <strong> Item Name: </strong>  {{list.name}}
@@ -110,7 +110,7 @@
 
       <div class="col-xs-6 col-md-3">
         <a class="thumbnail">
-          <img src="../images/box.png">
+          <img src="../images/{{list.category}}.png">
         </a>
       </div>
        <strong> Item Name: </strong>  {{list.name}}
@@ -143,7 +143,7 @@
      <div class="col-sm-4">
       <div class="col-xs-6 col-md-4">
         <a class="thumbnail">
-          <img src="../images/box.png">
+          <img src="../images/{{list.category}}.png">
         </a>
       </div>
 
@@ -158,7 +158,7 @@
        <br>
        <strong> {{ list.rentable  ?  "Available Now"  : "Not Available" }} </strong>
        <button class="btn-success" ng-click="rent(list)">Rent</button>
-       <button class = "btn-primary" ng-click="sendEmail(list)">Contact Owner</button>
+
       </div>
      </div>
   </div>

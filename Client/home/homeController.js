@@ -34,6 +34,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
      mainFactory.refreshed().then(function(data){ $scope.query = data});
    }
 
+
    var refreshUserListings = function() {
       $http({
        method:'GET',
