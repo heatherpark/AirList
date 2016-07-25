@@ -103,8 +103,10 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
 
     $scope.addItem = function(post){
       post.email = JSON.parse(window.localStorage.profile).email;
-      post.longitude = $scope.position.lng;
-      post.latitude = $scope.position.lat;
+      if($scope.position && $scope.position.lng && $scope.position.lat){
+        post.longitude = $scope.position.lng;
+        post.latitude = $scope.position.lat;
+      }
       $http({
         method:'POST',
         url: '/listings',
