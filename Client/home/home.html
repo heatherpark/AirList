@@ -82,7 +82,7 @@
        <button class="btn-success" ng-click="rent(list)">Rent</button>
        <button class = "btn-primary" ng-click="sendEmail(list)">Contact Owner</button>
      </div>
-     <div class="col-xs-12 col-md-4 listEntryMap"  id="listentry-{{$index}}"></div>
+     <div class="col-xs-12 col-md-4" ng-class="{listEntryMap: list.latitude && list.longitude}"  id="listentry-{{$index}}"></div>
     </div><!-- End of col-sm-12 -->
    </div><!-- End of lists div -->
  </div><!-- End of row -->
