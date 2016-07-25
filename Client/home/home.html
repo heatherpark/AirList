@@ -19,6 +19,8 @@
 </nav>
 <!-- End NAV -->
 
+<google-map center="map.center" zoom="map.zoom">
+</google-map>
 
 <!-- search results -->
 <div class="container" ng-show="showme" ng-init="login()">
@@ -30,7 +32,7 @@
       <div class="col-sm-12">
       <div class="col-xs-6 col-md-2">
         <a class="thumbnail">
-          <img src="../images/box.png">
+          <img src="../images/{{list.category}}.png">
         </a>
       </div>
       <div>
@@ -62,10 +64,10 @@
    <div class="col-sm-12">
       <div class="col-xs-6 col-md-2">
         <a class="thumbnail">
-          <img src="../images/box.png">
+          <img src="../images/{{list.category}}.png">
         </a>
       </div>
-     <div>
+     <div class="col-xs-6 col-md-4">
        <strong> Item Name: </strong> {{list.name}}
        <br>
        <strong> Category: </strong> {{list.category}}
@@ -80,6 +82,7 @@
        <button class="btn-success" ng-click="rent(list)">Rent</button>
        <button class = "btn-primary" ng-click="sendEmail(list)">Contact Owner</button>
      </div>
+     <div class="col-xs-12 col-md-4" ng-class="{listEntryMap: list.latitude && list.longitude}"  id="listentry-{{$index}}"></div>
     </div><!-- End of col-sm-12 -->
    </div><!-- End of lists div -->
  </div><!-- End of row -->
