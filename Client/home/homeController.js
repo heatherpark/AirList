@@ -18,7 +18,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
       {category: "Furniture"},
       {category: "Jewelry"},
       {category: "Sporting Goods"},
-      {category: "Toys/Games"}
+      {category: "Toys+Games"}
     ];
 
     $scope.addCategory = [
@@ -28,7 +28,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
       {category: "Furniture"},
       {category: "Jewelry"},
       {category: "Sporting Goods"},
-      {category: "Toys/Games"}
+      {category: "Toys+Games"}
     ];
 
     $scope.initMap = function(entry, index){
