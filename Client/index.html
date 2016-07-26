@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html ng-app='app'>
   <head>
-    <script>
-      // Geolocation only works on HTTPS, see link for details:
-      // https://developers.google.com/web/fundamentals/native-hardware/user-location/obtain-location?hl=en
+<!--     <script>
+      Need to comment out this script tag in order to run locally
+      Geolocation only works on HTTPS, see link for details:
+      https://developers.google.com/web/fundamentals/native-hardware/user-location/obtain-location?hl=en
       if (location.origin.indexOf('https') !== 0) {
         location.href = 'https://' + location.host;
       }
-    </script>
+    </script> -->
 
      <!-- Google Maps api -->
     <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDL5USanjD34TAwEWoQi2M3XiHqmLao-u0'></script>
@@ -35,6 +36,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <!-- BOOTSTRAP CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="production/styles.min.css">
@@ -49,7 +52,7 @@
   </head>
 
   <body ng-controller="mainController">
-    <div ng-view>  <!-- VIEWS INSERTED HERE -->
+    <div ng-view class="wrapper">  <!-- VIEWS INSERTED HERE -->
     </div>
     <!-- Custom Controllers-->
     <script src="/app/app.js" type="text/javascript"> </script>

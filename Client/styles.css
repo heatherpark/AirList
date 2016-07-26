@@ -1,3 +1,14 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  font-family: 'Lato', sans-serif;
+}
+
 .listingClass {
   width: 30% ;
 }
@@ -12,6 +23,13 @@
   border-radius: 2px
 }
 
-body {
-  font-family: 'Lato', sans-serif;
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+}
+footer > ul > li > a {
+  color: #333;
 }
