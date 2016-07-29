@@ -32,10 +32,17 @@ angular.module('app', [
       templateUrl: 'userAccount/userAccount.html',
       requiresLogin: true
     })
+
     // .when('/payment', {
     //   controller: 'paymentController',
     //   templateUrl: 'payment/paymentView.html'
     // });
+
+    .when('/login', {
+      controller: 'loginController',
+      templateUrl: 'login/login.html'
+    })
+
 
     //Called when login is successful
     authProvider.on('loginSuccess', ['$location', 'profilePromise', 'idToken', 'store', function($location, profilePromise, idToken, store) {
