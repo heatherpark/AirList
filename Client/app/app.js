@@ -1,4 +1,4 @@
-angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'userAccountController', 'loginController', 'app.controllers'])
+angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'userAccountController', 'loginController', 'app.controllers', 'app.factories'])
 
    .config(function myAppConfig ($routeProvider, authProvider){
     authProvider.init({
