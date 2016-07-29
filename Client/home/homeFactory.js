@@ -1,4 +1,4 @@
-angular.module('homeFactory', ['userAccountController', 'loginController'])
+angular.module('app.factories', ['userAccountController', 'loginController'])
 
   .factory('homeFactory', function($http, $window) {
 
