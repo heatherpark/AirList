@@ -6,6 +6,17 @@ var itemController = require('./item/itemController.js');
 
 var app = express();
 
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+
+io.on('connection', function(socket) {
+  socket.emit('something', { hello: 'world'});
+  socket.on('my other event', function(data) {
+    console.log(data);
+  })
+})
+
 //for heroku
 var port = process.env.PORT || 9000;
 var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/airlistdb';
@@ -40,7 +51,9 @@ app.post('/users', userController.createUser);
 
 app.delete('/users/:id', userController.deleteUser);
 */
-app.listen(port, function () {
+
+http.listen(port, function () {
   console.log("server up and running on port:" + port);
 });
+
 

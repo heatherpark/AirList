@@ -1,7 +1,12 @@
 angular.module('app.controllers', ['userAccountController', 'loginController', 'app.factories'])
 
-  .controller('HomeController', ['$scope', '$http', '$window', 'homeFactory', function($scope, $http, $window, homeFactory){
+  .controller('HomeController', ['$scope', '$http', '$window', 'homeFactory', 'socketio', function($scope, $http, $window, homeFactory, socketio){
 
+
+  socketio.on('something', function(data) {
+    console.log(data);
+    socketio.emit('my other event', {my: 'data'})
+  })
   //this gets the users current location within the app
     $scope.env = homeFactory.env;
 
