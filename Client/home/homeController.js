@@ -1,6 +1,6 @@
 angular.module('homeController', ['userAccountController', 'loginController'])
 
-  .controller('mainController', function($scope, $http, $window, homeFactory){
+  .controller('homeController', function($scope, $http, $window, homeFactory){
 
   //this gets the users current location within the app
     $scope.env = homeFactory.env;
