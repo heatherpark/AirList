@@ -5,10 +5,10 @@ Our app is called AirList
 
 ## Team
 
-  - __Product Owner__: Jeff Lam
-  - __Scrum Master__: Mark Pruett
-  - __Lead Engineer__: Sujin Lee
-  - __Head Engineer__: Christopher Heo
+  - __Product Owner__: Heather Park
+  - __Scrum Master__: Taylor Page
+  - __Lead Engineer__: Chase Patterson
+  - __Lead Engineer__: Louis Lo
 
 ## Table of Contents
 
@@ -22,7 +22,7 @@ Our app is called AirList
 
 ## Usage
 
-> AirList is a platform for users to come together and share items. A hybrid between Craigslist and AirBnb, AirList fills a need currently lacking in the sharing economy. Users can add items to rent out, and they can rent items others have posted. Currently, users must be logged in through Google to use the app. 
+> AirList is a platform for users to come together and share items. A hybrid between Craigslist and AirBnb, AirList fills a need currently lacking in the sharing economy. Users can add items to rent out, and they can rent items others have posted. Currently, users must be logged in through Google to use the app.
 
 ## Requirements
 
