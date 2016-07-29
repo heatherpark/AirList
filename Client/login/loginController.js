@@ -1,4 +1,4 @@
-angular.module('app.loginController', ['app'])
+angular.module('loginController', ['app'])
 
  .controller('loginController', ['$scope', 'auth', '$window', function ($scope, auth, $window) {
  //sets the users email address in localStorage. Signs them in

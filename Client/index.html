@@ -10,89 +10,72 @@
       // }
     </script>
 
-     <!-- Google Maps api -->
-    <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDL5USanjD34TAwEWoQi2M3XiHqmLao-u0'></script>
-
-    <!-- Auth0's lock widget library -->
-    <script type="text/javascript" src="https://cdn.auth0.com/js/lock-7.12.min.js"></script>
-    <!-- AngularJS core -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
-    <!-- Angular cookie wrapper library for client cookies -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-cookies.js"></script>
-    <!-- Angular's Router Library for SPA -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-route.js"></script>
-    <!-- Auth0's Angular SDK Library -->
-    <script type="text/javascript" src="https://cdn.auth0.com/w2/auth0-angular-4.js"></script>
-    <!-- Angular wrapper for localStorage and sessionStorage. Defaults to ng-cookies if not available -->
-    <script src="https://cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js" type="text/javascript"> </script>
-    <!-- Angular wrapper library for JWT-->
-    <script src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js" type="text/javascript"> </script>
-
-
-    <!-- Viewport settings-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <!-- BOOTSTRAP CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="production/styles.min.css">
-    <!-- BOOTSTRAP -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <!-- PRODUCTION FOLDER IF GRUNT IS USED TO MINIFY/CONCAT -->
-    <script src="production/production.js"></script>
+
+
     <title> AirList </title>
     <meta name="keywords" content="MEAN,Air,HackReactor,JavaScript">
     <meta name="description" content="AirList is a platform for users to come together and share items. A hybrid between Craigslist and AirBnb, AirList fills a need currently lacking in the sharing economy.">
     <meta name="author" content="Jeff Lam, Mark Pruett, Christopher Heo, Sujin Lee">
   </head>
 
-  <body ng-controller="mainController">
-    <div ng-view class="wrapper">  <!-- VIEWS INSERTED HERE -->
-    </div>
-    <!-- Custom Controllers-->
+  <body ng-controller="HomeController">
+
+    <div ng-view class="wrapper"></div>
+
+    <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDL5USanjD34TAwEWoQi2M3XiHqmLao-u0'></script>
+    <script type="text/javascript" src="https://cdn.auth0.com/js/lock-7.12.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-cookies.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-route.js"></script>
+    <script type="text/javascript" src="https://cdn.auth0.com/w2/auth0-angular-4.js"></script>
+    <script src="https://cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js" type="text/javascript"> </script>
+    <script src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js" type="text/javascript"> </script>
+    <script src="production/production.js"></script>
+
+    <!-- Controllers -->
     <script src="/app/app.js" type="text/javascript"> </script>
     <script src="/home/homeController.js" type="text/javascript"> </script>
     <script src="/userAccount/userAccountController.js" type="text/javascript"> </script>
-
     <script src="/login/loginController.js" type="text/javascript"> </script>
+
   </body>
-<div class="container">
-  <div class="row">
-    <footer class ="footer">
-      <ul class="list-inline">
-        <li>
-          <a href="https://github.com/JeffreyIam" target="_blank"> Product Owner: Jeff Lam <span class="fa-stack fa-lg">
-              <i class="fa fa-circle fa-stack-2x"></i>
-              <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
-          </span></a>
-        </li>
-        <li>
-          <a href="https://github.com/doitlikepruett" target="_blank"> Scrum Master: Mark Pruett <span class="fa-stack fa-lg">
-              <i class="fa fa-circle fa-stack-2x"></i>
-              <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
-          </span></a>
-        </li>
-        <li>
-          <a href="https://github.com/cheo10" target="_blank"> Lead Engineer: Christopher Heo <span class="fa-stack fa-lg">
-              <i class="fa fa-circle fa-stack-2x"></i>
-              <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
-          </span></a>
-        </li>
-        <li>
-          <a href="http://github.com/pasdesujin" target="_blank"> Lead Engineer: Sujin Lee <span class="fa-stack fa-lg">
-              <i class="fa fa-circle fa-stack-2x"></i>
-              <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
-          </span></a>
-        </li>
-      </ul>
-      <p>&#169; 2016 AirList. Built with MEAN stack </p>
-    </footer>
-  </div>
-</div>
+
+
+  <footer class ="footer">
+    <ul class="list-inline">
+      <li>
+        <a href="https://github.com/JeffreyIam" target="_blank"> Product Owner: Jeff Lam <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
+        </span></a>
+      </li>
+      <li>
+        <a href="https://github.com/doitlikepruett" target="_blank"> Scrum Master: Mark Pruett <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
+        </span></a>
+      </li>
+      <li>
+        <a href="https://github.com/cheo10" target="_blank"> Lead Engineer: Christopher Heo <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
+        </span></a>
+      </li>
+      <li>
+        <a href="http://github.com/pasdesujin" target="_blank"> Lead Engineer: Sujin Lee <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
+        </span></a>
+      </li>
+    </ul>
+    <p>&#169; 2016 AirList. Built with MEAN stack </p>
+  </footer>
 </html>
 
