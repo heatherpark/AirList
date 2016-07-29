@@ -1,4 +1,4 @@
-angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'app.userAccountController', 'app.loginController', 'app.homeController'])
+angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'userAccountController', 'loginController', 'homeController'])
 
    .config(function myAppConfig ($routeProvider, authProvider){
     authProvider.init({
@@ -10,7 +10,7 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'ap
     $routeProvider
     .when( '/', {
       controller: 'loginController',
-      templateUrl: 'home/home.html',
+      templateUrl: 'home/homeView.html',
       requiresLogin: false
     })
     .when( '/userAccount', {
