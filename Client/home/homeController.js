@@ -21,19 +21,32 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
     $scope.initMap = mainFactory.initMap;
 
   //pulls the latest data from the server. Used many times throughout the app to ensure latest data in the scope 'lists' variable
-    $scope.refresh = mainFactory.refresh;
+    var refresh = function(){
+      mainFactory.getListings().then(function(res){
+        $scope.lists = res.data;
+      });
+    }
+
+    refresh();
 
   //basically the same thing as 'refresh' above, but it updates a different scope variable, 'query' instead of 'lists'
     $scope.queryUpdater = mainFactory.queryUpdater;
 
   //again, similar to refresh above, but causes unknown bug when refactor is tried. Can be placed in a shared factory instead of here.
     $scope.refreshUserListings = function() {
-      $http({
-        method:'GET',
-        url: '/listings'
-      }).success(function(res) {
-        $scope.yourItems = res;
-        console.log('hello');
+      mainFactory.refreshUserListings().then(function(data) {
+        $scope.yourItems = data.data;
+      })
+    }
+
+    $scope.generalListings = function() {
+      mainFactory.getListings().then(function(res){
+        console.log(this);
+        $scope.lists = res.data
+        settimeout(function() {
+          $scope.lists.forEach(initMap);
+          $scope.$apply();
+        }, 1);
       });
     }
 
@@ -65,9 +78,9 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
 
   .factory('mainFactory', function($http, $window) {
 
-   var env = $window.location.href.split('#');
+    var env = $window.location.href.split('#');
 
-   var options = [
+    var options = [
       {category: "All Departments"},
       {category: "Books"},
       {category: "Cars"},
@@ -97,14 +110,8 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
       }
     }
 
-    var refresh = function(){
-      refreshed().then(function(res){
-        this.lists = res.data;
-      });
-    }
-
     var queryUpdater = function(){
-      refreshed().then(function(data){ this.query = data});
+      getListings().then(function(data){ this.query = data});
     }
 
     var goToUserAcc = function() {
@@ -115,15 +122,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
       $window.location.href = $window.location.origin;
     }
 
-    var generalListings = function() {
-      refreshed().then(function(res){
-        this.lists = res.data
-        setTimeout(function() {
-          this.lists.forEach(initMap);
-          this.$apply();
-        }, 1);
-      });
-    }
+
 
     var search = function(category){
       if(category === "All Departments") {
@@ -173,7 +172,7 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
     };
 
   //general refresh function
-    var refreshed = function() {
+    var getListings = function() {
       return $http.get('/listings');
     };
 
@@ -188,23 +187,29 @@ angular.module('app.homeController', ['app.userAccountController', 'app.loginCon
       }).then(this.refreshUserListings);
     };
 
-    var remove = function(item) {
-      $http.delete('/listings/' + item._id).success(function(res) {
-        this.refreshUserListings();
+
+    var refreshUserListings = function() {
+      return $http({
+        method:'GET',
+        url: '/listings'
       });
+    }
+
+    var remove = function(item) {
+      $http.delete('/listings/' + item._id)
+      .then(this.refreshUserListings);
     };
 
     return {
       env: env,
-      refreshed: refreshed,
+      getListings: getListings,
       options: options,
       addCategory: addCategory,
       initMap: initMap,
-      refresh: refresh,
       queryUpdater: queryUpdater,
       goToUserAcc: goToUserAcc,
       viewAllListings: viewAllListings,
-      generalListings: generalListings,
+      refreshUserListings: refreshUserListings,
       search: search,
       yourListings: yourListings,
       addItem: addItem,
