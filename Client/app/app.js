@@ -42,6 +42,10 @@ angular.module('app', [
       controller: 'loginController',
       templateUrl: 'login/login.html'
     })
+    .when('/signup', {
+      controller: 'signupController',
+      templateUrl: 'signUp/signUp.html'
+    })
 
 
     //Called when login is successful
@@ -62,7 +66,7 @@ angular.module('app', [
     authProvider.on('loginFailure', function($location) {
       // If anything goes wrong
         console.log("Login Failure foo!")
-        $location.url('#/');
+        $location.url('#/login');
     });
 
     // initialize app with Stripe API key

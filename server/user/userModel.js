@@ -10,6 +10,10 @@ var UserSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  password: {
+    type: String,
+    required: true
+  },
   rentedItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
   lentItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }]
 });
