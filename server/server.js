@@ -12,9 +12,7 @@ var io = require('socket.io')(http);
 
 io.on('connection', function(socket) {
   socket.emit('something', { hello: 'world'});
-  socket.on('my other event', function(data) {
-    console.log(data);
-  })
+  socket.emit('my other event', {my: 'data'})
 })
 
 //for heroku
