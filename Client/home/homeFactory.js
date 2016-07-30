@@ -78,6 +78,7 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
 
     var addItem = function(post){
       post.email = JSON.parse(window.localStorage.profile).email;
+      post.rentable = true;
       if(this.position && this.position.lng && this.position.lat){
         post.longitude = this.position.lng;
         post.latitude = this.position.lat;
