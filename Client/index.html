@@ -19,6 +19,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 
+
     <title> AirList </title>
     <meta name="keywords" content="MEAN,Air,HackReactor,JavaScript">
     <meta name="description" content="AirList is a platform for users to come together and share items. A hybrid between Craigslist and AirBnb, AirList fills a need currently lacking in the sharing economy.">
@@ -26,11 +27,10 @@
   </head>
 
   <body ng-controller="HomeController">
+        <!-- Socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
 
     <div ng-view class="wrapper"></div>
-
-    <!-- Socket.io -->
-    <script src="/socket.io/socket.io.js"></script>
 
     <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDL5USanjD34TAwEWoQi2M3XiHqmLao-u0'></script>
     <script type="text/javascript" src="https://cdn.auth0.com/js/lock-7.12.min.js"></script>
