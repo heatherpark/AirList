@@ -4,8 +4,7 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
 
 
   socketio.on('something', function(data) {
-    console.log(data);
-    socketio.emit('my other event', {my: 'data'})
+    $scope.refreshUserListings();
   })
   //this gets the users current location within the app
     $scope.env = homeFactory.env;
@@ -41,6 +40,7 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
     $scope.refreshUserListings = function() {
       homeFactory.refreshUserListings().then(function(data) {
         $scope.yourItems = data.data;
+        console.log('whatup bruh');
       })
     }
 
