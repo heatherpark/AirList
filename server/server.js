@@ -11,8 +11,10 @@ var io = require('socket.io')(http);
 
 
 io.on('connection', function(socket) {
-  socket.emit('something', { hello: 'world'});
-  socket.emit('my other event', {my: 'data'})
+  itemController.getAllItems()
+    .then( (items) => {
+      io.emit('gotAllItems', items)
+    })
 })
 
 //for heroku
@@ -26,6 +28,9 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../Client'));
 
 //api routes for items
+
+io.on('getAllItems', itemController.getAllItems);
+
 app.get('/listings',itemController.getAllItems);
 
 app.get('/listings/:id',itemController.getAnItem);
