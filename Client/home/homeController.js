@@ -1,7 +1,11 @@
 angular.module('app.controllers', ['userAccountController', 'loginController', 'app.factories'])
 
-  .controller('HomeController', ['$scope', '$http', '$window', 'homeFactory', function($scope, $http, $window, homeFactory){
+  .controller('HomeController', ['$scope', '$http', '$window', 'homeFactory', 'socketio', function($scope, $http, $window, homeFactory, socketio){
 
+
+  socketio.on('something', function(data) {
+    $scope.refreshUserListings();
+  })
   //this gets the users current location within the app
     $scope.env = homeFactory.env;
 
@@ -36,6 +40,7 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
     $scope.refreshUserListings = function() {
       homeFactory.refreshUserListings().then(function(data) {
         $scope.yourItems = data.data;
+        console.log('whatup bruh');
       })
     }
 

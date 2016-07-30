@@ -1,6 +1,16 @@
 angular.module('app.factories', ['userAccountController', 'loginController'])
 
-  .factory('homeFactory', function($http, $window) {
+  .config(['$routeProvider',  function($routeProvider) {
+    $routeProvider.when('/', {
+      templateUrl: '/index.html'
+    });
+  }])
+
+  .factory('homeFactory', ['$http', '$window', 'socketio', function($http, $window, socketio) {
+
+    socketio.on('my other event', function(data) {
+      console.log(data);
+    })
 
     var env = $window.location.href.split('#');
 
@@ -142,4 +152,28 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       remove: remove
     };
    //functions that are used on both userAccount.html and home.html can be put in here so they can be shared across the controllers
-  });
+  }])
+
+  .factory('socketio', ['$rootScope', function ($rootScope) {
+  var socket = io.connect();
+  return {
+    on: function (eventName, callback) {
+      socket.on(eventName, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          callback.apply(socket, args);
+        });
+      });
+    },
+    emit: function (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(socket, args);
+          }
+        });
+      })
+    }
+  };
+}]);
