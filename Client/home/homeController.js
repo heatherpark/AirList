@@ -28,14 +28,14 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
   //pulls the latest data from the server. Used many times throughout the app to ensure latest data in the scope 'lists' variable
     socketio.on('gotAllItems', function(items) {
       $scope.lists = items;
+      console.log(items);
     });
 
-    var refresh = function(){
-      socketio.emit('getAllItems')
+    $scope.refresh = function(){
+      socketio.emit('getAllItems');
     };
 
-    refresh();
-
+    $scope.refresh();
   //basically the same thing as 'refresh' above, but it updates a different scope variable, 'query' instead of 'lists'
     $scope.queryUpdater = homeFactory.queryUpdater;
 
@@ -43,13 +43,15 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
     $scope.refreshUserListings = function() {
       homeFactory.refreshUserListings().then(function(data) {
         $scope.yourItems = data.data;
-        console.log('whatup bruh');
       })
     }
 
+    socketio.on('gotYourList', function(items) {
+      $scope.yourItems = items;
+    })
+
     $scope.generalListings = function() {
       homeFactory.getListings().then(function(res){
-        console.log(this);
         $scope.lists = res.data
         settimeout(function() {
           $scope.lists.forEach(initMap);
@@ -57,6 +59,8 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
         }, 1);
       });
     }
+
+    $scope.yourListings = homeFactory.yourListings;
 
   //serves the userAccount.html page into ng-view on index.html
     $scope.goToUserAcc = homeFactory.goToUserAcc;
@@ -69,7 +73,6 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
   //searches the database based on the category
     $scope.search = homeFactory.search;
 
-    $scope.yourListings = homeFactory.yourListings;
 
   //adds a post to the database, using the person's username grabbed from localStorage. Can be placed in the userAccountController instead
     $scope.addItem = homeFactory.addItem;

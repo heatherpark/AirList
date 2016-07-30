@@ -1,7 +1,7 @@
 <!-- BEGIN NAV -->
 <nav class="navbar navbar-inverse nav-fixed-top">
  <div>
-  <img src="../images/goods.jpg" class="img-responsive banner">
+  <img ng-src="../images/goods.jpg" class="img-responsive banner">
   </div>
  <div class="container">
    <a class="navbar-brand" href='#/'> AirList </a>
@@ -63,7 +63,7 @@
         <input ng-model="list.days" placeholder="Number of Days" class="form-control"></input>
       </div>
      </div>
-     <span ng-model="list.rentable" ng-init="list.rentabl=true">
+     <span ng-model="list.rentable" ng-init="list.rentable=true">
 <!-- END OF ITEM DAYS FORM -->
 <!-- BEGIN SUBMIT BUTTON FORM-->
      <div class="form-group">
@@ -87,7 +87,7 @@
      <div ng-repeat="list in yourItems | filter: {'email' : email} | orderBy: 'created_at':true">
       <div class="col-xs-6 col-md-3">
         <a class="thumbnail">
-          <img src="../images/{{list.category}}.png">
+          <img ng-src="../images/{{list.category}}.png">
         </a>
       </div>
        <strong> Item Name: </strong>  {{list.name}}
@@ -113,7 +113,7 @@
      <div ng-repeat="list in yourItems | filter: {'renter': email} | orderBy: 'created_at':true">
       <div class="col-xs-6 col-md-3">
         <a class="thumbnail">
-          <img src="../images/{{list.category}}.png">
+          <img ng-src="../images/{{list.category}}.png">
         </a>
       </div>
        <strong> Item Name: </strong>  {{list.name}}
@@ -145,7 +145,7 @@
      <div class="col-sm-4">
       <div class="col-xs-6 col-md-4">
         <a class="thumbnail">
-          <img src="../images/{{list.category}}.png">
+          <img ng-src="../images/{{list.category}}.png">
         </a>
       </div>
 
