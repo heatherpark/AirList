@@ -49,7 +49,7 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
     }
 
     var goToUserAcc = function() {
-      $window.location.href  = $window.location.href + 'userAccount'
+      $window.location.href = $window.location.href + 'userAccount'
     }
 
     var viewAllListings = function() {
@@ -75,12 +75,6 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
         });
       }
     };
-
-    var yourListings = function() {
-    //in order to sort by a person's listing, we grab their email address out of the localStorage. It was stored there after the person logged in with OAuth. If OAuth is not used, another method of getting their email must be used, or just set the person's email address in localStorage in the same place and let the existing code stay the same.
-      this.email = JSON.parse(window.localStorage.profile).email;
-      this.refreshUserListings();
-    }
 
     var addItem = function(post){
       post.email = JSON.parse(window.localStorage.profile).email;
@@ -121,6 +115,15 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       }).then(this.refreshUserListings);
     };
 
+    var yourListings = function() {
+    //in order to sort by a person's listing, we grab their email address out of the localStorage. It was stored there after the person logged in with OAuth. If OAuth is not used, another method of getting their email must be used, or just set the person's email address in localStorage in the same place and let the existing code stay the same.
+      this.email = JSON.parse(window.localStorage.profile).email;
+      //this.refreshUserListings();
+      console.log(this.email);
+
+      socketio.emit('getUserItems', this.email);
+    }
+
 
     var refreshUserListings = function() {
       return $http({
@@ -130,8 +133,10 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
     }
 
     var remove = function(item) {
-      $http.delete('/listings/' + item._id)
-      .then(this.refreshUserListings);
+      // $http.delete('/listings/' + item._id)
+      // .then(this.refreshUserListings);
+
+      console.log(item);
     };
 
     return {
@@ -144,8 +149,8 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       goToUserAcc: goToUserAcc,
       viewAllListings: viewAllListings,
       refreshUserListings: refreshUserListings,
-      search: search,
       yourListings: yourListings,
+      search: search,
       addItem: addItem,
       rent: rent,
       returnItem: returnItem,

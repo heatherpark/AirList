@@ -38,6 +38,11 @@ module.exports.getAllItemsWithCategory = function(req, res) {
   });
 };
 
+module.exports.getAllItemsWithEmail = function(req, res) {
+  var email = req.params.email;
+  return getAll({email: email})
+};
+
 module.exports.getAnItem = function(req, res) {
   var id = req.params.id;
   getItem({_id:id})
