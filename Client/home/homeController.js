@@ -2,6 +2,7 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
 
   .controller('HomeController', ['$scope', '$http', '$window', 'homeFactory', 'socketio', function($scope, $http, $window, homeFactory, socketio){
 
+  $scope.lists = [];
 
   socketio.on('something', function(data) {
     $scope.refreshUserListings();
@@ -25,11 +26,13 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
     $scope.initMap = homeFactory.initMap;
 
   //pulls the latest data from the server. Used many times throughout the app to ensure latest data in the scope 'lists' variable
+    socketio.on('gotAllItems', function(items) {
+      $scope.lists = items;
+    });
+
     var refresh = function(){
-      homeFactory.getListings().then(function(res){
-        $scope.lists = res.data;
-      });
-    }
+      socketio.emit('getAllItems')
+    };
 
     refresh();
 

@@ -1,6 +1,7 @@
 var Item = require('./itemModel.js');
 var Q = require('q');
 
+
 // promisify
 var makeItem = Q.nbind(Item.create, Item);
 var getAll = Q.nbind(Item.find, Item);
@@ -21,15 +22,8 @@ module.exports.createItem = function(req, res) {
 };
 
 // fetch all items from database
-module.exports.getAllItems = function(req, res) {
-  getAll({})
-  .then(function(items){
-    res.status(200);
-    res.json(items);
-  })
-  .fail(function(err){
-    res.sendStatus(404);
-  });
+module.exports.getAllItems = function() {
+  return getAll({});
 };
 
 module.exports.getAllItemsWithCategory = function(req, res) {
