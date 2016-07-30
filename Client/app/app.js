@@ -1,3 +1,4 @@
+<<<<<<< 4b61166f77f0bf39f21fd27a9d6ee7313b71c17f
 angular.module('app', [
   'auth0',
   'angular-storage',
@@ -5,6 +6,7 @@ angular.module('app', [
   'ngRoute',
   'userAccountController',
   'loginController',
+  'signUpController',
   'app.controllers',
   'app.factories',
   'angularPayments',
@@ -43,7 +45,7 @@ angular.module('app', [
       templateUrl: 'login/login.html'
     })
     .when('/signup', {
-      controller: 'signupController',
+      controller: 'signUpController',
       templateUrl: 'signUp/signUp.html'
     })
 
