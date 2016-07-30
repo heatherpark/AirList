@@ -1,7 +1,6 @@
 angular.module('signUpController', ['app'])
 
-  .controller('signUpController', ['$scope', 'auth', '$window', 'signUpFactory', function ($scope, auth, $window, signUpFactory) {
-  $scope.postUser = loginFactory.postUser;
+  .controller('signUpController', ['$scope', 'auth', '$window', 'signUpFactory', function ($scope, auth, $window, signUpFactory){
 
   }])
 
