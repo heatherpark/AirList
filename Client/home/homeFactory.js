@@ -82,11 +82,7 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
         post.longitude = this.position.lng;
         post.latitude = this.position.lat;
       }
-      $http({
-        method:'POST',
-        url: '/listings',
-        data: post
-      }).then(this.refreshUserListings);
+      socketio.emit('createItem', post);
     };
 
     var rent = function(item){
@@ -124,6 +120,11 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       socketio.emit('getUserItems', this.email);
     }
 
+    socketio.on('yourListings', function() {
+      console.log("hey")
+      yourListings();
+    })
+
 
     var refreshUserListings = function() {
       return $http({
@@ -135,8 +136,7 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
     var remove = function(item) {
       // $http.delete('/listings/' + item._id)
       // .then(this.refreshUserListings);
-
-      console.log(item);
+      socketio.emit('deleteUserItem', item._id);
     };
 
     return {

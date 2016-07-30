@@ -24,6 +24,16 @@ io.on('connection', function(socket) {
     .then(function(data) {
       io.emit('gotYourList', data);
     })
+  });
+
+  socket.on('deleteUserItem', function(item) {
+    itemController.deleteItem({ params : { id: item } })
+      io.emit('yourListings');
+  })
+
+  socket.on('createItem', function(item) {
+    itemController.createItem({ body: item})
+    io.emit('yourListings');
   })
 })
 
@@ -38,8 +48,6 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../Client'));
 
 //api routes for items
-
-io.on('getAllItems', itemController.getAllItems);
 
 // app.get('/listings', itemController.getAllItems);
 
