@@ -86,13 +86,15 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
     };
 
     var rent = function(item){
+      console.log(item);
       item.rentable = false;
       item.renter = JSON.parse(window.localStorage.profile).email;
-      $http({
-        method: 'PUT',
-        url: '/listings/' + item._id,
-        data: item
-      });
+      socketio.emit('rent', item);
+      // $http({
+      //   method: 'PUT',
+      //   url: '/listings/' + item._id,
+      //   data: item
+      // });
     };
 
   //general refresh function

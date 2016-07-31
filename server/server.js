@@ -35,6 +35,23 @@ io.on('connection', function(socket) {
     itemController.createItem({ body: item})
     io.emit('yourListings');
   })
+
+  socket.on('rent', function(item) {
+    itemController.updateAnItem({
+      params : {
+        id: item._id
+      },
+      body: {
+        renter: item.renter,
+        rentable: item.rentable
+      }
+    }).then(function() {
+      itemController.getAllItems()
+        .then( (items) => {
+          io.emit('gotAllItems', items)
+        })
+    });
+  })
 })
 
 //for heroku
