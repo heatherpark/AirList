@@ -65,6 +65,12 @@
      </div>
      <span ng-model="list.rentable" ng-init="list.rentable=true">
 <!-- END OF ITEM DAYS FORM -->
+
+    Pick an image-file: <input type="file" ng-model="list.image" accept="image/*" multiple app-filereader /><br />
+    <img ng-repeat="image in list.image" ng-src="{{image}}" width="300" /><br />
+    <button ng-click="list.image = null" ng-show="!!list.image">Remove {{list.image.length}} images</button><br />
+
+
 <!-- BEGIN SUBMIT BUTTON FORM-->
      <div class="form-group">
       <div class="col-sm-5 col-sm-offset-4-right">
