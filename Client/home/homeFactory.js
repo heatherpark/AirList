@@ -89,12 +89,7 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       console.log(item);
       item.rentable = false;
       item.renter = JSON.parse(window.localStorage.profile).email;
-      socketio.emit('rent', item);
-      // $http({
-      //   method: 'PUT',
-      //   url: '/listings/' + item._id,
-      //   data: item
-      // });
+      socketio.emit('update', item);
     };
 
   //general refresh function
@@ -106,24 +101,17 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       item.rentable = true;
       delete item.renter;
       var newItem = item;
-      $http({
-        method: 'PUT',
-        url: '/listings/' + item._id,
-        data: newItem
-      }).then(this.refreshUserListings);
+      socketio.emit('update', newItem);
     };
 
     var yourListings = function() {
     //in order to sort by a person's listing, we grab their email address out of the localStorage. It was stored there after the person logged in with OAuth. If OAuth is not used, another method of getting their email must be used, or just set the person's email address in localStorage in the same place and let the existing code stay the same.
       this.email = JSON.parse(window.localStorage.profile).email;
       //this.refreshUserListings();
-      console.log(this.email);
-
       socketio.emit('getUserItems', this.email);
     }
 
     socketio.on('yourListings', function() {
-      console.log("hey")
       yourListings();
     })
 

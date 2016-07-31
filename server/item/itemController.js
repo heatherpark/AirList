@@ -67,11 +67,6 @@ module.exports.deleteItem = function(req, res) {
   })
 };
 
-module.exports.update = function(req, res) {
-  var id = req.params.id;
-  var newParams = req.body;
-};
-
 module.exports.updateAnItem = function(req, res) {
   var id = req.params.id;
   var newParams = req.body;
