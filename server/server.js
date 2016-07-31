@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var itemController = require('./item/itemController.js');
 var Item = require('./item/itemModel.js');
-var stripe = require("stripe")("sk_test_jYT9mgIAEqAONQ2xdbeoDKAW");
+var stripeKey = require('../Client/env/config.js').stripeKey;
+var stripe = require("stripe")(stripeKey);
 
 var app = express();
 
@@ -17,7 +18,7 @@ var agenda = require('agenda')({ db: { address: mongoUri } });  // chron-like li
 var Sugar = require('sugar'); // syntactic sugar library (used specifically for date conversion here)
 var nodemailer = require('nodemailer'); // used to send email from node
 var sgTransport = require('nodemailer-sendgrid-transport'); // for SendGrid (email provider) to work with nodemailer
-var sgKey = require('../Client/env/config.js'); // SendGrid api key
+var sgKey = require('../Client/env/config.js').sgKey; // SendGrid api key
 
 // middleware
 app.use(bodyParser.urlencoded({extended: true}));
@@ -32,14 +33,15 @@ http.listen(port, function () {
   console.log("server up and running on port:" + port);
 });
 
+// stripe payment POST request handler
 app.post('/api/payment', function(req, res) {
   var stripeToken = req.body.stripeToken;
 
   var charge = stripe.charges.create({
-    amount: 1000, // amount in cents, again
+    amount: 1000,
     currency: "usd",
     source: stripeToken,
-    description: "Example charge"
+    description: 'modal testing'
   }, function(err, charge) {
     if (err && err.type === 'StripeCardError') {
       console.log('error: ', err);

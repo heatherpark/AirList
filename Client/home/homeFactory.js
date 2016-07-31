@@ -87,10 +87,10 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
     };
 
     var rent = function(item){
-      console.log(item);
+      console.log('Hello from rent function!');
       item.rentable = false;
-      item.renter = JSON.parse(window.localStorage.profile).email;
-      socketio.emit('update', item);
+      // item.renter = JSON.parse(window.localStorage.profile).email;
+      // socketio.emit('update', item);
     };
 
   //general refresh function

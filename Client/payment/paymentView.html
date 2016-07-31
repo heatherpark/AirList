@@ -1,4 +1,4 @@
-<form stripe-form="charge">
+<form stripe-form="charge" ng-controller="paymentController">
     <input ng-model="number" placeholder="Card Number"
       payments-format="card" payments-validate="card" name="card" />
     <input ng-model="expiry" placeholder="Expiration"

@@ -84,7 +84,7 @@ can send email to user by accessing email property of object -->
        <strong> Rental Period: </strong> {{list.days}} days
        <br>
        <strong> {{ list.rentable  ?  "Available Now"  : "Not Available" }}  </strong>
-       <button class="btn-success" ng-click="rent(list)">Rent</button>
+       <button class="btn-success" ng-click="pay()">Rent</button>
        <button class = "btn-primary" ng-click="sendEmail(list)">Contact Owner</button>
      </div>
      <!-- ng-class to create a class if item has a latitude and longitude so we do not have empty black boxes -->
