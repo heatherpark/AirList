@@ -1,14 +1,21 @@
-angular.module('app.controllers', ['userAccountController', 'loginController', 'app.factories', 'payment'])
+angular.module('app.controllers', [
+  'userAccountController',
+  'loginController',
+  'app.factories',
+  'payment',
+])
 
-  .controller('HomeController', ['$scope', '$http', '$window', 'homeFactory', 'socketio', function($scope, $http, $window, homeFactory, socketio){
+.controller('HomeController', ['$scope', '$rootScope', '$http', '$window', '$uibModal', 'homeFactory', 'socketio', 'paymentFactory',
+  function($scope, $rootScope, $http, $window, $uibModal, homeFactory, socketio, paymentFactory) {
 
   $scope.lists = [];
 
   socketio.on('something', function(data) {
     $scope.refreshUserListings();
   })
+
   //this gets the users current location within the app
-    $scope.env = homeFactory.env;
+  $scope.env = homeFactory.env;
 
   //this asks the user to provide their location. If they agree, the users longitude and latitude will be stored. This will be used later as the position when the user adds an item from the userAccount page.
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -17,6 +24,12 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
         lng: position.coords.longitude
       };
     });
+
+    // pay
+    $scope.pay = function() {
+      console.log('hello from hC pay function!');
+      paymentFactory.paymentForm();
+    };
 
   //sets up the category options
     $scope.options = homeFactory.options;
@@ -84,4 +97,4 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
 
   //this removes an item from the database. Only users can delete their own items. Can be placed in the userAccountController instead
     $scope.remove = homeFactory.remove;
-}])
+}]);

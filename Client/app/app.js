@@ -9,7 +9,9 @@ angular.module('app', [
   'app.factories',
   'angularPayments',
   'payment',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ui.bootstrap.modal',
+  'ui.bootstrap.tpls'
 ])
 
  .config(function myAppConfig ($routeProvider, authProvider){
@@ -30,10 +32,10 @@ angular.module('app', [
       templateUrl: 'userAccount/userAccount.html',
       requiresLogin: true
     })
-    .when('/payment', {
-      controller: 'paymentController',
-      templateUrl: 'payment/paymentView.html'
-    });
+    // .when('/payment', {
+    //   controller: 'paymentController',
+    //   templateUrl: 'payment/paymentView.html'
+    // });
 
     //Called when login is successful
     authProvider.on('loginSuccess', ['$location', 'profilePromise', 'idToken', 'store', function($location, profilePromise, idToken, store) {
