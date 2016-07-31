@@ -41,3 +41,6 @@ jspm_packages
 
 .DS_Store
 .DS_Store
+
+# API keys
+Client/env/config.js
