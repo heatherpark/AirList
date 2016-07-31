@@ -110,7 +110,7 @@ agenda.define('send email alert', function(job, done) {
     // email contents
     var mailOptions = {
       from: 'customerservice@airshare.com',
-      to: item.email,
+      to: item.renter,
       subject: 'AirShare Rental Notification',
       text: text
     };
