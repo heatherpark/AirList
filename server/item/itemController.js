@@ -1,6 +1,9 @@
 var Item = require('./itemModel.js');
 var Q = require('q');
-
+var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/airlistdb';
+var agenda = require('agenda')({ db: { address: mongoUri } });
+var sugar = require('sugar');
+var nodemailer = require('nodemailer');
 
 // promisify
 var makeItem = Q.nbind(Item.create, Item);
@@ -66,6 +69,21 @@ module.exports.deleteItem = function(req, res) {
     res.sendStatus(404);
   })
 };
+
+// module.exports.rentAnItem = function(req, res) {
+//   var itemId = req.params.id;
+//   var data = req.body;
+
+//   Item.findOneAndUpdate({_id: itemId}, data, function(err, found) {
+//     if (found) {
+//       console.log('rented item found!');
+//       agenda.schedule('in 10 seconds', 'send email alert', itemId);
+//       res.send(200, found);
+//     } else {
+//       console.log(err);
+//     }
+//   });
+// };
 
 module.exports.updateAnItem = function(req, res) {
   var id = req.params.id;

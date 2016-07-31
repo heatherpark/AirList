@@ -2,7 +2,17 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var itemController = require('./item/itemController.js');
+var Item = require('./item/itemModel.js');
 // var userController = require('./user/userController.js');    NOT USED BUT AVAILBLE FOR LEGACY TEAM IF NEEDED
+
+var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/airlistdb';
+
+// dependencies for email notifications
+var agenda = require('agenda')({ db: { address: mongoUri } });
+var sugar = require('sugar');
+var nodemailer = require('nodemailer');
+var sgTransport = require('nodemailer-sendgrid-transport');
+var sgKey = require('../client/env/config.js');
 
 var app = express();
 
@@ -56,7 +66,6 @@ io.on('connection', function(socket) {
 
 //for heroku
 var port = process.env.PORT || 9000;
-var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/airlistdb';
 mongoose.connect(mongoUri);
 
 // middleware
@@ -78,6 +87,7 @@ app.use(express.static(__dirname + '/../Client'));
 
 // app.put('/listings/:id',itemController.updateAnItem);
 
+
 // api routes for users
 // routes for users schema if legacy team needs it, but we didn't use it. We only used the item schema.
 /* ROUTES
@@ -89,6 +99,18 @@ app.post('/users', userController.createUser);
 
 app.delete('/users/:id', userController.deleteUser);
 */
+
+// using agenda.js for email notifications
+
+agenda.on('start', function(job) {
+  console.log("Job %s starting", job.attrs.name);
+});
+
+agenda.on('complete', function(job) {
+  console.log("Job %s finished", job.attrs.name);
+});
+
+
 
 http.listen(port, function () {
   console.log("server up and running on port:" + port);
