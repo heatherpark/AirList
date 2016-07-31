@@ -85,9 +85,10 @@ module.exports.deleteItem = function(req, res) {
 //   });
 // };
 
-module.exports.updateAnItem = function(req, res) {
-  var id = req.params.id;
-  var newParams = req.body;
+// because of socket.io, the parameters for this function are no longer req and res
+module.exports.updateAnItem = function(item) {
+  var id = item.params.id;
+  var newParams = item.body;
 
   return Item.findOne({_id: id}, function(err, doc) {
     if (newParams.days) {  //UPDATE DAYS (RENTAL PERIOD)
