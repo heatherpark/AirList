@@ -36,7 +36,7 @@ io.on('connection', function(socket) {
     io.emit('yourListings');
   })
 
-  socket.on('rent', function(item) {
+  socket.on('update', function(item) {
     itemController.updateAnItem({
       params : {
         id: item._id
