@@ -70,21 +70,6 @@ module.exports.deleteItem = function(req, res) {
   })
 };
 
-// module.exports.rentAnItem = function(req, res) {
-//   var itemId = req.params.id;
-//   var data = req.body;
-
-//   Item.findOneAndUpdate({_id: itemId}, data, function(err, found) {
-//     if (found) {
-//       console.log('rented item found!');
-//       agenda.schedule('in 10 seconds', 'send email alert', itemId);
-//       res.send(200, found);
-//     } else {
-//       console.log(err);
-//     }
-//   });
-// };
-
 // because of socket.io, the parameters for this function are no longer req and res
 module.exports.updateAnItem = function(item) {
   var id = item.params.id;
