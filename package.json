@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "agenda": "^0.8.1",
+    "angular-payments": "^1.0.7",
     "angular-simple-logger": "^0.1.7",
     "angular-socket-io": "^0.7.0",
     "body-parser": "^1.4.3",
@@ -26,6 +27,7 @@
     "nodemailer-sendgrid-transport": "^0.2.0",
     "q": "^1.4.1",
     "socket.io": "^1.4.8",
+    "stripe": "^4.9.0",
     "sugar": "^2.0.0"
   },
   "devDependencies": {

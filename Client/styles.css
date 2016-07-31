@@ -31,3 +31,7 @@ body {
 footer > ul > li > a {
   color: #333;
 }
+
+.ng-invalid {
+  color: red;
+}
