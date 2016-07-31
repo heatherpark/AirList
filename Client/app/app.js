@@ -8,7 +8,8 @@ angular.module('app', [
   'app.controllers',
   'app.factories',
   'angularPayments',
-  'payment'
+  'payment',
+  'ui.bootstrap'
 ])
 
  .config(function myAppConfig ($routeProvider, authProvider){
