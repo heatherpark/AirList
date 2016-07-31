@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var itemController = require('./item/itemController.js');
 var Item = require('./item/itemModel.js');
-// var userController = require('./user/userController.js');    NOT USED BUT AVAILBLE FOR LEGACY TEAM IF NEEDED
+var stripe = require("stripe")("sk_test_jYT9mgIAEqAONQ2xdbeoDKAW");
 
 var app = express();
 
@@ -12,7 +12,15 @@ var port = process.env.PORT || 9000;
 var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/airlistdb';
 mongoose.connect(mongoUri);
 
+// for email notifications
+var agenda = require('agenda')({ db: { address: mongoUri } });  // chron-like lib for node
+var Sugar = require('sugar'); // syntactic sugar library (used specifically for date conversion here)
+var nodemailer = require('nodemailer'); // used to send email from node
+var sgTransport = require('nodemailer-sendgrid-transport'); // for SendGrid (email provider) to work with nodemailer
+var sgKey = require('../Client/env/config.js'); // SendGrid api key
+
 // middleware
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 //serve static files
 app.use(express.static(__dirname + '/../Client'));
@@ -20,12 +28,29 @@ app.use(express.static(__dirname + '/../Client'));
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-// for email notifications
-var agenda = require('agenda')({ db: { address: mongoUri } });  // chron-like lib for node
-var Sugar = require('sugar'); // syntactic sugar library (used specifically for date conversion here)
-var nodemailer = require('nodemailer'); // used to send email from node
-var sgTransport = require('nodemailer-sendgrid-transport'); // for SendGrid (email provider) to work with nodemailer
-var sgKey = require('../Client/env/config.js'); // SendGrid api key
+http.listen(port, function () {
+  console.log("server up and running on port:" + port);
+});
+
+app.post('/api/payment', function(req, res) {
+  var stripeToken = req.body.stripeToken;
+
+  var charge = stripe.charges.create({
+    amount: 1000, // amount in cents, again
+    currency: "usd",
+    source: stripeToken,
+    description: "Example charge"
+  }, function(err, charge) {
+    if (err && err.type === 'StripeCardError') {
+      console.log('error: ', err);
+    } else {
+      console.log('success! ', charge);
+    }
+  });
+
+  res.send(charge);
+});
+
 
 io.on('connection', function(socket) {
 
@@ -140,8 +165,4 @@ agenda.on('start', function(job) {
 
 agenda.on('complete', function(job) {
   console.log("Job %s finished", job.attrs.name);
-});
-
-http.listen(port, function () {
-  console.log("server up and running on port:" + port);
 });

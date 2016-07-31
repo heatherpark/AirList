@@ -1,4 +1,4 @@
-angular.module('app.controllers', ['userAccountController', 'loginController', 'app.factories'])
+angular.module('app.controllers', ['userAccountController', 'loginController', 'app.factories', 'payment'])
 
   .controller('HomeController', ['$scope', '$http', '$window', 'homeFactory', 'socketio', function($scope, $http, $window, homeFactory, socketio){
 
