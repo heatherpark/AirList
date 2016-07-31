@@ -28,7 +28,6 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
   //pulls the latest data from the server. Used many times throughout the app to ensure latest data in the scope 'lists' variable
     socketio.on('gotAllItems', function(items) {
       $scope.lists = items;
-      console.log(items);
     });
 
     $scope.refresh = function(){
