@@ -8,6 +8,7 @@ var getAll = Q.nbind(Item.find, Item);
 var removeItem = Q.nbind(Item.remove, Item);
 var getItem = Q.nbind(Item.findOne, Item);
 
+
 // create a new item in database
 module.exports.createItem = function(req, res) {
   makeItem(req.body)
@@ -38,6 +39,11 @@ module.exports.getAllItemsWithCategory = function(req, res) {
   });
 };
 
+module.exports.getAllItemsWithEmail = function(req, res) {
+  var email = req.params.email;
+  return getAll({email: email})
+};
+
 module.exports.getAnItem = function(req, res) {
   var id = req.params.id;
   getItem({_id:id})
@@ -65,7 +71,7 @@ module.exports.updateAnItem = function(req, res) {
   var id = req.params.id;
   var newParams = req.body;
 
-  Item.findOne({_id: id}, function(err, doc) {
+  return Item.findOne({_id: id}, function(err, doc) {
     if (newParams.days) {  //UPDATE DAYS (RENTAL PERIOD)
       doc.days = newParams.days;
     }
@@ -90,15 +96,6 @@ module.exports.updateAnItem = function(req, res) {
     if (newParams.hasOwnProperty('rentable')) {    //UPDATE ITEM'S RENTABLE AS TRUE/FALSE
       doc.rentable = newParams.rentable;
     }
-
-
-    if (err) {
-      res.status(404);
-      res.send(err);
-     } else {
-      doc.save();
-      res.status(200);
-      res.send(doc);
-     }
+    doc.save();
   });
 };

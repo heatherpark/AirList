@@ -11,10 +11,47 @@ var io = require('socket.io')(http);
 
 
 io.on('connection', function(socket) {
-  itemController.getAllItems()
-    .then( (items) => {
-      io.emit('gotAllItems', items)
+
+  socket.on('getAllItems', function() {
+    itemController.getAllItems()
+      .then( (items) => {
+        io.emit('gotAllItems', items)
+      })
+  });
+
+  socket.on('getUserItems', function(email) {
+    itemController.getAllItemsWithEmail({ params : { email : email } })
+    .then(function(data) {
+      io.emit('gotYourList', data);
     })
+  });
+
+  socket.on('deleteUserItem', function(item) {
+    itemController.deleteItem({ params : { id: item } })
+      io.emit('yourListings');
+  })
+
+  socket.on('createItem', function(item) {
+    itemController.createItem({ body: item})
+    io.emit('yourListings');
+  })
+
+  socket.on('update', function(item) {
+    itemController.updateAnItem({
+      params : {
+        id: item._id
+      },
+      body: {
+        renter: item.renter,
+        rentable: item.rentable
+      }
+    }).then(function() {
+      itemController.getAllItems()
+        .then( (items) => {
+          io.emit('gotAllItems', items)
+        })
+    });
+  })
 })
 
 //for heroku
@@ -29,19 +66,17 @@ app.use(express.static(__dirname + '/../Client'));
 
 //api routes for items
 
-io.on('getAllItems', itemController.getAllItems);
+// app.get('/listings', itemController.getAllItems);
 
-app.get('/listings',itemController.getAllItems);
+// app.get('/listings/:id',itemController.getAnItem);
 
-app.get('/listings/:id',itemController.getAnItem);
+// app.get('/listings/category/:category',itemController.getAllItemsWithCategory);
 
-app.get('/listings/category/:category',itemController.getAllItemsWithCategory);
+// app.post('/listings',itemController.createItem);
 
-app.post('/listings',itemController.createItem);
+// app.delete('/listings/:id',itemController.deleteItem);
 
-app.delete('/listings/:id',itemController.deleteItem);
-
-app.put('/listings/:id',itemController.updateAnItem);
+// app.put('/listings/:id',itemController.updateAnItem);
 
 // api routes for users
 // routes for users schema if legacy team needs it, but we didn't use it. We only used the item schema.

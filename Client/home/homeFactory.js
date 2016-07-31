@@ -49,7 +49,7 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
     }
 
     var goToUserAcc = function() {
-      $window.location.href  = $window.location.href + 'userAccount'
+      $window.location.href = $window.location.href + 'userAccount'
     }
 
     var viewAllListings = function() {
@@ -76,33 +76,20 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       }
     };
 
-    var yourListings = function() {
-    //in order to sort by a person's listing, we grab their email address out of the localStorage. It was stored there after the person logged in with OAuth. If OAuth is not used, another method of getting their email must be used, or just set the person's email address in localStorage in the same place and let the existing code stay the same.
-      this.email = JSON.parse(window.localStorage.profile).email;
-      this.refreshUserListings();
-    }
-
     var addItem = function(post){
       post.email = JSON.parse(window.localStorage.profile).email;
       if(this.position && this.position.lng && this.position.lat){
         post.longitude = this.position.lng;
         post.latitude = this.position.lat;
       }
-      $http({
-        method:'POST',
-        url: '/listings',
-        data: post
-      }).then(this.refreshUserListings);
+      socketio.emit('createItem', post);
     };
 
     var rent = function(item){
+      console.log(item);
       item.rentable = false;
       item.renter = JSON.parse(window.localStorage.profile).email;
-      $http({
-        method: 'PUT',
-        url: '/listings/' + item._id,
-        data: item
-      });
+      socketio.emit('update', item);
     };
 
   //general refresh function
@@ -114,12 +101,19 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       item.rentable = true;
       delete item.renter;
       var newItem = item;
-      $http({
-        method: 'PUT',
-        url: '/listings/' + item._id,
-        data: newItem
-      }).then(this.refreshUserListings);
+      socketio.emit('update', newItem);
     };
+
+    var yourListings = function() {
+    //in order to sort by a person's listing, we grab their email address out of the localStorage. It was stored there after the person logged in with OAuth. If OAuth is not used, another method of getting their email must be used, or just set the person's email address in localStorage in the same place and let the existing code stay the same.
+      this.email = JSON.parse(window.localStorage.profile).email;
+      //this.refreshUserListings();
+      socketio.emit('getUserItems', this.email);
+    }
+
+    socketio.on('yourListings', function() {
+      yourListings();
+    })
 
 
     var refreshUserListings = function() {
@@ -130,8 +124,9 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
     }
 
     var remove = function(item) {
-      $http.delete('/listings/' + item._id)
-      .then(this.refreshUserListings);
+      // $http.delete('/listings/' + item._id)
+      // .then(this.refreshUserListings);
+      socketio.emit('deleteUserItem', item._id);
     };
 
     return {
@@ -144,8 +139,8 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       goToUserAcc: goToUserAcc,
       viewAllListings: viewAllListings,
       refreshUserListings: refreshUserListings,
-      search: search,
       yourListings: yourListings,
+      search: search,
       addItem: addItem,
       rent: rent,
       returnItem: returnItem,
