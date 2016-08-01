@@ -19,7 +19,7 @@ angular.module('app', [
     authProvider.init({
       domain: 'mcpatte.auth0.com',
       clientID: 'ttkIeD4sPNAApCckJC2u8Q0cIHY2MJeh',
-      loginUrl: 'http:127.0.0.1:9000/login'
+      loginUrl: 'login'
     });
 
     $routeProvider
