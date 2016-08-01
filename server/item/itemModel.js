@@ -11,7 +11,8 @@ var ItemSchema = new mongoose.Schema({
   email: String,        //EMAIL ADDRESS OF OWNER
   renter: String,        //EMAIL ADDRESS OF PERSON RENTING ITEM
   latitude: Number,
-  longitude: Number
+  longitude: Number,
+  image: String
 });
 
 module.exports = mongoose.model('Item', ItemSchema);
