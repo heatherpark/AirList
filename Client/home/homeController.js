@@ -26,8 +26,9 @@ angular.module('app.controllers', [
     });
 
     // pay
-    $scope.pay = function() {
-      console.log('hello from hC pay function!');
+    $scope.pay = function(itemInfo) {
+      console.log('$scope.pay ', itemInfo);
+      paymentFactory.chargedItem = itemInfo;
       paymentFactory.paymentForm();
     };
 
