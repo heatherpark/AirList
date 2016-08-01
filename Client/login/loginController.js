@@ -2,8 +2,7 @@ angular.module('loginController', ['app'])
 
  .controller('loginController', ['$scope', 'auth', '$window', '$location', function ($scope, auth, $window, $location) {
  //sets the users email address in localStorage. Signs them in
-    $scope.login = function(){
-      console.log('hey')
+    $scope.doLogin = function(){
         auth.signin({
           email: $scope.email,
           password: $scope.password,
