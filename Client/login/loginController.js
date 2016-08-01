@@ -1,17 +1,26 @@
 angular.module('loginController', ['app'])
 
- .controller('loginController', ['$scope', 'auth', '$window', 'loginFactory', function ($scope, auth, $window, loginFactory) {
-
+ .controller('loginController', ['$scope', 'auth', '$window', '$location', function ($scope, auth, $window, $location) {
  //sets the users email address in localStorage. Signs them in
     $scope.login = function(){
-      if(!window.localStorage.profile) {
-        auth.signin();
-      }
-    };
+      console.log('hey')
+        auth.signin({
+          email: $scope.email,
+          password: $scope.password,
+          connection: 'Username-Password-Authentication'
+        });
+    }
+
+    $scope.loginWithFacebook = function(){
+      auth.signin({
+        connection: 'facebook'
+      });
+    }
 //clears the profile and JWT token from localStorage, effectively logging the person out and returning them to the home.html page where it will ask them to log in again.
     $scope.logout = function() {
       window.localStorage.clear();
-      $window.location.href ='https://dilp.auth0.com/v2/logout?returnTo=' + $scope.env[0];
+      auth.signout();
+      $location.path('/login');
    };
 
 //Fired when a user clicks on the 'Contact Owner' button. It will open their default mail client with a prefilled message and subject
@@ -20,7 +29,7 @@ angular.module('loginController', ['app'])
      var message = "Dear item owner,"
      $window.open("mailto:" + item.email + "?subject=" + subj + "&body=" + message, "_self");
    };
-
 }]);
+
 
 

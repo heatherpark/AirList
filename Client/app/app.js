@@ -18,8 +18,8 @@ angular.module('app', [
 
  .config(function myAppConfig ($routeProvider, authProvider){
     authProvider.init({
-      domain: 'dilp.auth0.com',
-      clientID: 'khcIzPKbh7xrfincGzpmj3qspWqAEgWb',
+      domain: 'mcpatte.auth0.com',
+      clientID: 'ttkIeD4sPNAApCckJC2u8Q0cIHY2MJeh',
       loginUrl: '/login'
     });
 
@@ -27,7 +27,7 @@ angular.module('app', [
     .when( '/', {
       controller: 'loginController',
       templateUrl: 'home/homeView.html',
-      requiresLogin: false
+      requiresLogin: true
     })
     .when( '/userAccount', {
       controller: 'loginController',
@@ -42,11 +42,13 @@ angular.module('app', [
 
     .when('/login', {
       controller: 'loginController',
-      templateUrl: 'login/login.html'
+      templateUrl: 'login/login.html',
+      requiresLogin: false
     })
-    .when('/signup', {
+    .when('/signUp', {
       controller: 'signUpController',
-      templateUrl: 'signUp/signUp.html'
+      templateUrl: 'signUp/signUp.html',
+      requiresLogin: false
     })
 
 
@@ -68,7 +70,7 @@ angular.module('app', [
     authProvider.on('loginFailure', function($location) {
       // If anything goes wrong
         console.log("Login Failure foo!")
-        $location.url('#/login');
+        $location.url('#/');
     });
 
     // initialize app with Stripe API key
