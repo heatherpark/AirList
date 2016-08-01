@@ -1,8 +1,9 @@
 angular.module('payment')
 
 .factory('paymentFactory', function($http, $uibModal) {
+  var chargedItem;
+
   var paymentForm = function() {
-    console.log('hello from paymentForm function!');
     var paymentModal = $uibModal.open({
       animation: true,
       templateUrl: 'payment/paymentView.html',
@@ -11,19 +12,17 @@ angular.module('payment')
     });
   };
 
-  var payWithStripe = function(token) {
+  var payWithStripe = function(paymentInfo) {
     return $http({
       method: 'POST',
       url: '/api/payment',
-      data: token,
+      data: paymentInfo,
       headers: {'Content-Type': 'application/json'}
-    })
-    .then(function(res) {
-      console.log(res);
     });
   };
 
   return {
+    chargedItem: chargedItem,
     paymentForm: paymentForm,
     payWithStripe: payWithStripe
   };

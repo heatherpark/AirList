@@ -6,8 +6,15 @@ angular.module('payment', [])
       console.log('it failed! error: ' + result.error.message);
     } else {
       console.log('success! token: ' + result.id);
-      var token = {stripeToken: result.id};
-      paymentFactory.payWithStripe(token);
+
+      var paymentInfo = {
+        stripeToken: result.id,
+        itemName: paymentFactory.chargedItem.name,
+        itemPrice: paymentFactory.chargedItem.price
+      };
+
+      paymentFactory.payWithStripe(paymentInfo);
+      // call rent function here and use paymentFactory.chargedItem as argument
     }
   };
 });
