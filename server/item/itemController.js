@@ -1,6 +1,9 @@
 var Item = require('./itemModel.js');
 var Q = require('q');
-
+var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/airlistdb';
+var agenda = require('agenda')({ db: { address: mongoUri } });
+var sugar = require('sugar');
+var nodemailer = require('nodemailer');
 
 // promisify
 var makeItem = Q.nbind(Item.create, Item);
@@ -67,9 +70,10 @@ module.exports.deleteItem = function(req, res) {
   })
 };
 
-module.exports.updateAnItem = function(req, res) {
-  var id = req.params.id;
-  var newParams = req.body;
+// because of socket.io, the parameters for this function are no longer req and res
+module.exports.updateAnItem = function(item) {
+  var id = item.params.id;
+  var newParams = item.body;
 
   return Item.findOne({_id: id}, function(err, doc) {
     if (newParams.days) {  //UPDATE DAYS (RENTAL PERIOD)

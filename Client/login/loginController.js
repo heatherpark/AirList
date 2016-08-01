@@ -19,4 +19,4 @@ angular.module('loginController', ['app'])
      var message = "Dear item owner,"
      $window.open("mailto:" + item.email + "?subject=" + subj + "&body=" + message, "_self");
    };
-  }])
+}]);

@@ -1,14 +1,21 @@
-angular.module('app.controllers', ['userAccountController', 'loginController', 'app.factories'])
+angular.module('app.controllers', [
+  'userAccountController',
+  'loginController',
+  'app.factories',
+  'payment',
+])
 
-  .controller('HomeController', ['$scope', '$http', '$window', 'homeFactory', 'socketio', function($scope, $http, $window, homeFactory, socketio){
+.controller('HomeController', ['$scope', '$rootScope', '$http', '$window', '$uibModal', 'homeFactory', 'socketio', 'paymentFactory',
+  function($scope, $rootScope, $http, $window, $uibModal, homeFactory, socketio, paymentFactory) {
 
   $scope.lists = [];
 
   socketio.on('something', function(data) {
     $scope.refreshUserListings();
   })
+
   //this gets the users current location within the app
-    $scope.env = homeFactory.env;
+  $scope.env = homeFactory.env;
 
   //this asks the user to provide their location. If they agree, the users longitude and latitude will be stored. This will be used later as the position when the user adds an item from the userAccount page.
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -17,6 +24,14 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
         lng: position.coords.longitude
       };
     });
+
+    // for Stripe payments
+    $scope.pay = function(itemInfo) {
+      // places charged item's info on paymentFactory
+      paymentFactory.chargedItem = itemInfo;
+      // calls function on paymentFactory to open modal
+      paymentFactory.paymentForm();
+    };
 
   //sets up the category options
     $scope.options = homeFactory.options;
@@ -28,7 +43,6 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
   //pulls the latest data from the server. Used many times throughout the app to ensure latest data in the scope 'lists' variable
     socketio.on('gotAllItems', function(items) {
       $scope.lists = items;
-      console.log(items);
     });
 
     $scope.refresh = function(){
@@ -85,4 +99,4 @@ angular.module('app.controllers', ['userAccountController', 'loginController', '
 
   //this removes an item from the database. Only users can delete their own items. Can be placed in the userAccountController instead
     $scope.remove = homeFactory.remove;
-}])
+}]);

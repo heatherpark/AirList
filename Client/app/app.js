@@ -1,6 +1,20 @@
-angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'userAccountController', 'loginController', 'app.controllers', 'app.factories'])
+angular.module('app', [
+  'auth0',
+  'angular-storage',
+  'angular-jwt',
+  'ngRoute',
+  'userAccountController',
+  'loginController',
+  'app.controllers',
+  'app.factories',
+  'angularPayments',
+  'payment',
+  'ui.bootstrap',
+  'ui.bootstrap.modal',
+  'ui.bootstrap.tpls'
+])
 
-   .config(function myAppConfig ($routeProvider, authProvider){
+ .config(function myAppConfig ($routeProvider, authProvider){
     authProvider.init({
       domain: 'dilp.auth0.com',
       clientID: 'khcIzPKbh7xrfincGzpmj3qspWqAEgWb',
@@ -18,6 +32,10 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'us
       templateUrl: 'userAccount/userAccount.html',
       requiresLogin: true
     })
+    // .when('/payment', {
+    //   controller: 'paymentController',
+    //   templateUrl: 'payment/paymentView.html'
+    // });
 
     //Called when login is successful
     authProvider.on('loginSuccess', ['$location', 'profilePromise', 'idToken', 'store', function($location, profilePromise, idToken, store) {
@@ -40,7 +58,10 @@ angular.module('app', ['auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'us
         $location.url('#/');
     });
 
- }) //end of config
+    // initialize app with Stripe API key
+    window.Stripe.setPublishableKey('pk_test_TDyvWZl9vHWZcycVkvfDyIud');
+
+}) //end of config
 
 .run(['$rootScope', 'auth', 'store', 'jwtHelper', '$location', function($rootScope, auth, store, jwtHelper, $location) {
   // Listen to a location change event

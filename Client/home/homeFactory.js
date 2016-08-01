@@ -78,18 +78,12 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
 
     var addItem = function(post){
       post.email = JSON.parse(window.localStorage.profile).email;
+      post.rentable = true;
       if(this.position && this.position.lng && this.position.lat){
         post.longitude = this.position.lng;
         post.latitude = this.position.lat;
       }
       socketio.emit('createItem', post);
-    };
-
-    var rent = function(item){
-      console.log(item);
-      item.rentable = false;
-      item.renter = JSON.parse(window.localStorage.profile).email;
-      socketio.emit('update', item);
     };
 
   //general refresh function
@@ -142,7 +136,6 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       yourListings: yourListings,
       search: search,
       addItem: addItem,
-      rent: rent,
       returnItem: returnItem,
       remove: remove
     };
