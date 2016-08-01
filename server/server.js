@@ -18,7 +18,8 @@ var agenda = require('agenda')({ db: { address: mongoUri } });  // chron-like li
 var Sugar = require('sugar'); // syntactic sugar library (used specifically for date conversion here)
 var nodemailer = require('nodemailer'); // used to send email from node
 var sgTransport = require('nodemailer-sendgrid-transport'); // for SendGrid (email provider) to work with nodemailer
-var sgKey = require('../Client/env/config.js').sgKey; // SendGrid api key
+var sgKey = process.env.SEND_GRID_KEY || require('../Client/env/config.js').sgKey;
+var stripeKey = process.env.STRIPE_KEY || require('../Client/env/config.js').stripeKey;
 
 // middleware
 app.use(bodyParser.urlencoded({extended: true}));
@@ -117,7 +118,7 @@ agenda.define('send email alert', function(job, done) {
       secure: true,
       strictSSL: false,
       auth: {
-        api_key: sgKey
+        api_key: stripeKey
       }
     }
 
