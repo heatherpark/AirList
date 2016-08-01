@@ -5,6 +5,7 @@ angular.module('app', [
   'ngRoute',
   'userAccountController',
   'loginController',
+  'signUpController',
   'app.controllers',
   'app.factories',
   'angularPayments',
@@ -16,8 +17,8 @@ angular.module('app', [
 
  .config(function myAppConfig ($routeProvider, authProvider){
     authProvider.init({
-      domain: 'dilp.auth0.com',
-      clientID: 'khcIzPKbh7xrfincGzpmj3qspWqAEgWb',
+      domain: 'mcpatte.auth0.com',
+      clientID: 'ttkIeD4sPNAApCckJC2u8Q0cIHY2MJeh',
       loginUrl: '/login'
     });
 
@@ -25,17 +26,30 @@ angular.module('app', [
     .when( '/', {
       controller: 'loginController',
       templateUrl: 'home/homeView.html',
-      requiresLogin: false
+      requiresLogin: true
     })
     .when( '/userAccount', {
       controller: 'loginController',
       templateUrl: 'userAccount/userAccount.html',
       requiresLogin: true
     })
+
     // .when('/payment', {
     //   controller: 'paymentController',
     //   templateUrl: 'payment/paymentView.html'
     // });
+
+    .when('/login', {
+      controller: 'loginController',
+      templateUrl: 'login/login.html',
+      requiresLogin: false
+    })
+    .when('/signUp', {
+      controller: 'signUpController',
+      templateUrl: 'signUp/signUp.html',
+      requiresLogin: false
+    })
+
 
     //Called when login is successful
     authProvider.on('loginSuccess', ['$location', 'profilePromise', 'idToken', 'store', function($location, profilePromise, idToken, store) {

@@ -2,7 +2,7 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
 
   .config(['$routeProvider',  function($routeProvider) {
     $routeProvider.when('/', {
-      templateUrl: '/index.html'
+      templateUrl: '../login/login.html'
     });
   }])
 
