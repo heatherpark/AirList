@@ -86,13 +86,6 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       socketio.emit('createItem', post);
     };
 
-    var rent = function(item){
-      console.log('Hello from rent function!');
-      item.rentable = false;
-      // item.renter = JSON.parse(window.localStorage.profile).email;
-      // socketio.emit('update', item);
-    };
-
   //general refresh function
     var getListings = function() {
       return $http.get('/listings');
@@ -143,7 +136,6 @@ angular.module('app.factories', ['userAccountController', 'loginController'])
       yourListings: yourListings,
       search: search,
       addItem: addItem,
-      rent: rent,
       returnItem: returnItem,
       remove: remove
     };
