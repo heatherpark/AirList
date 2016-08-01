@@ -1,4 +1,3 @@
-<<<<<<< 4b61166f77f0bf39f21fd27a9d6ee7313b71c17f
 angular.module('app', [
   'auth0',
   'angular-storage',
