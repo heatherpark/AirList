@@ -35,9 +35,7 @@ can send email to user by accessing email property of object -->
      <div ng-if="list.category !== undefined" ng-init="refresh()" ng-repeat="list in query | filter:searchBox | orderBy: 'category'">
       <div class="col-sm-12">
       <div class="col-xs-6 col-md-2">
-        <a class="thumbnail">
-          <img ng-src="../images/{{list.category}}.png">
-        </a>
+        <img class="img-thumbnail" ng-src="{{list.image}}">
       </div>
       <div>
          <strong> Item Name: </strong> {{list.name}}
@@ -68,9 +66,7 @@ can send email to user by accessing email property of object -->
    <div ng-if="list.category !== undefined" ng-repeat="list in lists">
    <div class="col-sm-12">
       <div class="col-xs-6 col-md-2">
-        <a class="thumbnail">
-          <img ng-src="../images/{{list.category}}.png">
-        </a>
+        <img class="img-thumbnail" ng-src="{{list.image}}">
       </div>
      <div class="col-xs-6 col-md-4">
        <strong> Item Name: </strong> {{list.name}}
