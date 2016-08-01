@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var itemController = require('./item/itemController.js');
 var Item = require('./item/itemModel.js');
-var stripeKey = require('../Client/env/config.js').stripeKey;
+var stripeKey = process.env.STRIPE_KEY || require('../Client/env/config.js').stripeKey;
 var stripe = require("stripe")(stripeKey);
 
 var app = express();
@@ -19,7 +19,6 @@ var Sugar = require('sugar'); // syntactic sugar library (used specifically for 
 var nodemailer = require('nodemailer'); // used to send email from node
 var sgTransport = require('nodemailer-sendgrid-transport'); // for SendGrid (email provider) to work with nodemailer
 var sgKey = process.env.SEND_GRID_KEY || require('../Client/env/config.js').sgKey;
-var stripeKey = process.env.STRIPE_KEY || require('../Client/env/config.js').stripeKey;
 
 // middleware
 app.use(bodyParser.urlencoded({extended: true}));
@@ -55,13 +54,6 @@ app.post('/api/payment', function(req, res) {
 
   res.send(charge);
 });
-
-// for email notifications
-var agenda = require('agenda')({ db: { address: mongoUri } });  // chron-like lib for node
-var Sugar = require('sugar'); // syntactic sugar library (used specifically for date conversion here)
-var nodemailer = require('nodemailer'); // used to send email from node
-var sgTransport = require('nodemailer-sendgrid-transport'); // for SendGrid (email provider) to work with nodemailer
-var sgKey = process.env.SEND_GRID_KEY || require('../Client/env/config.js').sgKey; // SendGrid api key
 
 
 io.on('connection', function(socket) {
@@ -125,13 +117,7 @@ agenda.define('send email alert', function(job, done) {
       secure: true,
       strictSSL: false,
       auth: {
-<<<<<<< e3bc9c3965ae9b8f9d6f7d4804232e5ed4e13656
-        api_key: stripeKey
-||||||| merged common ancestors
         api_key: sgKey
-=======
-        api_key: process.env.STRIPE_KEY || require('../Client/env/config.js').stripeKey;
->>>>>>> Update to include deployment config vars
       }
     }
 
