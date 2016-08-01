@@ -92,21 +92,11 @@ io.on('connection', function(socket) {
         rentable: item.rentable
       }
     })
-    // updates item entry in DB
-    // saves new agenda job for each item to DB
     .then(function(item) {
       var itemId = item._id;
-      Item.findOneAndUpdate({_id: itemId}, item).exec(function(err, found) {
-        if (found) {
-          // sugarjs is used here to convert readable dates to date data required by agenda
-          // the email date is scheduled for the day before the item is due.
-          var emailDate = new Sugar.Date().advance(item.days - 1).raw;
-          // scheduling an agenda job with the new job that is defined below
-          agenda.schedule(emailDate, 'send email alert', itemId);
-        } else {
-          console.log(err);
-        }
-      });
+      var emailDate = new Sugar.Date().advance(item.days - 1).raw;
+      // scheduling an agenda job with the new job that is defined below
+      agenda.schedule(emailDate, 'send email alert', itemId);
     })
     .then(function() {
       itemController.getAllItems()
@@ -133,27 +123,28 @@ agenda.define('send email alert', function(job, done) {
 
     var mailer = nodemailer.createTransport(sgTransport(options));
 
-    // email text
-    var text = "Hey there! \n\nJust wanted to remind you that " + item.name + " is due back tomorrow!\n\nThanks from the AirShare team!";
+    if(item){
+      // email text
+      var text = "Hey there! \n\nJust wanted to remind you that " + item.name + " is due back tomorrow!\n\nThanks from the AirShare team!";
 
-    // email contents
-    var mailOptions = {
-      from: 'customerservice@airshare.com',
-      to: item.renter,
-      subject: 'AirShare Rental Notification',
-      text: text
-    };
-
+      // email contents
+      var mailOptions = {
+        from: 'customerservice@airshare.com',
+        to: item.renter,
+        subject: 'AirShare Rental Notification',
+        text: text
+      };
     // set appropriate callbacks upon sending email
-    mailer.sendMail(mailOptions, function(error, response) {
-      if (error) {
-        console.log('error: ', error);
-      } else {
-        console.log('email sent!');
-        mailer.close();
-        done();
-      }
-    });
+      mailer.sendMail(mailOptions, function(error, response) {
+        if (error) {
+          console.log('error: ', error);
+        } else {
+          console.log('email sent!');
+          mailer.close();
+          done();
+        }
+      });
+    }
   });
 });
 
