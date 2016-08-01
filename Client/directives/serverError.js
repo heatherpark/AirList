@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('app', [])
   .directive('serverError', function() {
     return {
         restrict: 'A',

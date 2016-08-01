@@ -6,8 +6,8 @@ var itemController = require('./item/itemController.js');
 var Item = require('./item/itemModel.js');
 var stripeKey = require('../Client/env/config.js').stripeKey;
 var stripe = require("stripe")(stripeKey);
-
 var userController = require('./user/userController.js');
+
 
 var app = express();
 
@@ -57,7 +57,6 @@ app.post('/api/payment', function(req, res) {
 
   res.send(charge);
 });
-
 
 io.on('connection', function(socket) {
 
@@ -132,8 +131,6 @@ app.use(express.static(__dirname + '/../Client'));
 
 //api routes for items
 
-// app.get('/listings', itemController.getAllItems);
-
 // app.get('/listings/:id',itemController.getAnItem);
 
 // app.get('/listings/category/:category',itemController.getAllItemsWithCategory);
@@ -143,6 +140,7 @@ app.use(express.static(__dirname + '/../Client'));
 // app.delete('/listings/:id',itemController.deleteItem);
 
 // app.put('/listings/:id',itemController.updateAnItem);
+
 
 app.post('/login', userController.createUser);
 
@@ -202,6 +200,11 @@ agenda.define('send email alert', function(job, done) {
 agenda.on('ready', function() {
   // starts processing jobs
   agenda.start();
+=======
+
+http.listen(port, function () {
+  console.log("server up and running on port:" + port);
+>>>>>>> add working custom authentication pages
 });
 
 agenda.on('start', function(job) {

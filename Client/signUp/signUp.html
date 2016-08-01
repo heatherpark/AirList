@@ -3,7 +3,7 @@
   <div class="center-form panel">
     <div class="panel-body">
       <h4 class="text-center"><i class="ion-person-add"></i> Sign up</h4>
-      <form method="post" ng-submit="postUser(email, password)" name="signupForm">
+      <form method="post" ng-submit="signUp(email, password)" name="signupForm">
         <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.email.$invalid && signupForm.email.$dirty }">
           <input class="form-control input-lg" type="text" id="email" name="email" ng-model="email" placeholder="Email" required>
           <span class="ion-at form-control-feedback"></span>
