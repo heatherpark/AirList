@@ -134,6 +134,7 @@ agenda.define('send email alert', function(job, done) {
         subject: 'AirShare Rental Notification',
         text: text
       };
+
     // set appropriate callbacks upon sending email
       mailer.sendMail(mailOptions, function(error, response) {
         if (error) {
