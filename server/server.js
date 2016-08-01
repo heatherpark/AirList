@@ -36,8 +36,7 @@ http.listen(port, function () {
 // stripe payment POST request handler
 app.post('/api/payment', function(req, res) {
   var stripeToken = req.body.stripeToken;
-  console.log('charged item name', req.body.itemName);
-  console.log('charged item price', req.body.itemPrice);
+
   var charge = stripe.charges.create({
     amount: req.body.itemPrice * 100,
     currency: "usd",
@@ -47,7 +46,7 @@ app.post('/api/payment', function(req, res) {
     if (err && err.type === 'StripeCardError') {
       console.log('error: ', err);
     } else {
-      console.log('success! ', charge);
+      console.log('success!');
     }
   });
 
