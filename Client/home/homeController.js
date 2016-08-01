@@ -25,10 +25,11 @@ angular.module('app.controllers', [
       };
     });
 
-    // pay
+    // for Stripe payments
     $scope.pay = function(itemInfo) {
-      console.log('$scope.pay ', itemInfo);
+      // places charged item's info on paymentFactory
       paymentFactory.chargedItem = itemInfo;
+      // calls function on paymentFactory to open modal
       paymentFactory.paymentForm();
     };
 

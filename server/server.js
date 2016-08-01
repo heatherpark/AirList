@@ -36,12 +36,14 @@ http.listen(port, function () {
 // stripe payment POST request handler
 app.post('/api/payment', function(req, res) {
   var stripeToken = req.body.stripeToken;
+  var name = req.body.itemName;
+  var price = req.body.itemPrice
 
   var charge = stripe.charges.create({
-    amount: req.body.itemPrice * 100,
+    amount: price * 100, // price of item in pennies
     currency: "usd",
     source: stripeToken,
-    description: req.body.itemName
+    description: name  // name of item for transaction info
   }, function(err, charge) {
     if (err && err.type === 'StripeCardError') {
       console.log('error: ', err);
@@ -79,7 +81,7 @@ io.on('connection', function(socket) {
     itemController.createItem({ body: item})
     io.emit('yourListings');
   });
-
+  // runs when item is officially rented
   socket.on('update', function(item) {
     itemController.updateAnItem({
       params : {

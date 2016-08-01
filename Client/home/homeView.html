@@ -84,6 +84,7 @@ can send email to user by accessing email property of object -->
        <strong> Rental Period: </strong> {{list.days}} days
        <br>
        <strong> {{ list.rentable  ?  "Available Now"  : "Not Available" }}  </strong>
+       <!-- clicking the 'Rent' button will bring up a Stripe payment modal -->
        <button class="btn-success" ng-click="pay(list)">Rent</button>
        <button class = "btn-primary" ng-click="sendEmail(list)">Contact Owner</button>
      </div>

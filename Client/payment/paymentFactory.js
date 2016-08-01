@@ -1,8 +1,10 @@
 angular.module('payment')
 
 .factory('paymentFactory', function($http, $uibModal) {
+  // will contain info for rented item
   var chargedItem;
 
+  // opens payment for modal using Bootstrap UI
   var paymentForm = function() {
     var paymentModal = $uibModal.open({
       animation: true,
@@ -12,6 +14,8 @@ angular.module('payment')
     });
   };
 
+  // will be invoked by a function in paymentController
+  // makes server request to send Stripe token and other relevant item info
   var payWithStripe = function(paymentInfo) {
     return $http({
       method: 'POST',
