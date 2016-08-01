@@ -1,6 +1,6 @@
 angular.module('payment', [])
 
-.controller('paymentController', function ($scope, paymentFactory) {
+.controller('paymentController', function ($scope, paymentFactory, socketio) {
   $scope.charge = function (code, result) {
     if (result.error) {
       console.log('it failed! error: ' + result.error.message);
@@ -13,8 +13,13 @@ angular.module('payment', [])
         itemPrice: paymentFactory.chargedItem.price
       };
 
-      paymentFactory.payWithStripe(paymentInfo);
-      // call rent function here and use paymentFactory.chargedItem as argument
+      paymentFactory.payWithStripe(paymentInfo)
+      .then(function() {
+        var item = paymentFactory.chargedItem;
+        item.rentable = false;
+        item.renter = JSON.parse(window.localStorage.profile).email;
+        socketio.emit('update', item);
+      });
     }
   };
 });
