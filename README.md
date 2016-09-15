@@ -1,5 +1,4 @@
-# Project Name
-Our app is called AirList
+# AirShare
 
 
 
@@ -53,18 +52,3 @@ View the project roadmap [here](https://waffle.io/GreenfieldMewTwo/GreenfieldMew
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
-
-## WishList
-
-- homeController.js contains a lot of code that can be refactored into userAccountController.js
-  - We recommend doing this step first before adding additional features so that the homeController doesn't get too big
-- Utilize the user table in mongo because right now everything is in the item table
-- Use grunt buildpack to concat/minify everything into production.min.js and style.min.css (we got lazy and didn't continue this as app became more complex)
-- Calendar widget to select dates for rental period
-- Use Stripe/Dwolla/Paypal api to allow users to pay each other and have the website take a % of each transaction
-- Make sure receipt/record of each transaction is logged in the database
-- Add zipcode input for item so google maps can display general area rather than having user allowing location sharing
-- Remind users of upcoming return dates for items they have rented
-- Add tests
-- Known bug: when two people rent the same item at the same time, app errors (possible solution: if statement before http request)
-
